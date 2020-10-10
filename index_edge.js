@@ -5057,7 +5057,7 @@
                                             }, 1000)
                                         }
                                     }
-                                }, 1)
+                                }, 100)
                             }, 1000)
                             try {
                                 parent.parent.addKidPoints(1);
