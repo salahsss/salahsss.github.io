@@ -4647,7 +4647,7 @@
                     });
                 });
 				alert("before init");
-               // nextStep()
+                nextStep();
 
                 function init() {
 				alert("start init");
@@ -4882,7 +4882,7 @@
                     sym.getSymbol("#Stage_scene1_sym_pics_sym_pic" + (RVal + 1)).stop(0)
                     sym.getSymbol("#Stage_scene1_sym_pics").stop("lbl" + (RVal + 1))
                     sym.getSymbol("#Stage_scene1_resultBoard").stop("lbl" + (RVal + 1) + "_1");
-                    enableClick();
+                    
                 }
 
                 function enableClick() {
@@ -5236,6 +5236,11 @@
                         setTimeout(function() {
                             start1 = false;
                         }, 50)
+						
+						
+						setTimeout(function() {
+                            enableClick();
+                        }, 4000)
                     }
                 }
 
