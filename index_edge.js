@@ -5000,13 +5000,10 @@
                                 }
 								console.log("timeout0 CheckAnswer Hey: 2");
                                 window["res" + RVal].play();
-                                timeout1 = setInterval(function() {
-									console.log("timeout1 CheckAnswer Hey: 2");						
-                                    seconds = window["res" + RVal].getTime();
-									console.log("timeout1 CheckAnswer Hey: 2 seconds: " + seconds);						
-
-                                    if (window["res" + RVal].isEnded() || seconds === 0) {
-										console.log("timeout1 CheckAnswer Hey: 3");
+								
+								window["res" + RVal].onended=function(){
+									
+									console.log("timeout1 CheckAnswer Hey: 3");
                                         try {
                                             clearInterval(timeout1);
                                         } catch (err) {}
@@ -5068,8 +5065,21 @@
                                                 }, 50)
                                             }, 1000)
                                         }
+									
+								};
+								
+								
+								
+								
+                              /*  timeout1 = setInterval(function() {
+									console.log("timeout1 CheckAnswer Hey: 2");						
+                                    seconds = window["res" + RVal].getTime();
+									console.log("timeout1 CheckAnswer Hey: 2 seconds: " + seconds);						
+
+                                    if (window["res" + RVal].isEnded()) {
+										
                                     }
-                                }, 50)
+                                }, 50)*/
                             }, 1000)
                             try {
                                 parent.parent.addKidPoints(1);
@@ -5126,11 +5136,11 @@
                             window["info"].play();
                             timeout1 = setInterval(function() {
                                 seconds = window["info"].getTime();
-                                if (seconds == 15.11) {
+                                if (seconds >= 15.11 && seconds < 19.49) {
                                     sym.getSymbol("#Stage_sym_info_sound").play(0);
-                                } else if (seconds == 19.49) {
+                                } else if (seconds >= 19.49 && seconds<23.92) {
                                     sym.getSymbol("#Stage_sym_info_info").play(0);
-                                } else if (seconds == 23.92) {
+                                } else if (seconds >= 23.92) {
                                     sym.getSymbol("#Stage_sym_info_home").play(0);
                                     try {
                                         clearInterval(timeout1);
@@ -5250,11 +5260,11 @@
                             window["info"].play();
                             timeout1 = setInterval(function() {
                                 seconds = window["info"].getTime();
-                                if (seconds == 15.11) {
+                                if (seconds >= 15.11 && seconds < 19.49) {
                                     sym.getSymbol("#Stage_sym_info_sound").play(0);
-                                } else if (seconds == 19.49) {
+                                } else if (seconds >= 19.49 && seconds < 23.92) {
                                     sym.getSymbol("#Stage_sym_info_info").play(0);
-                                } else if (seconds == 23.92) {
+                                } else if (seconds >= 23.92) {
                                     sym.getSymbol("#Stage_sym_info_home").play(0);
                                     try {
                                         clearInterval(timeout1);
