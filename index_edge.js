@@ -4744,7 +4744,7 @@
                     seconds = 0;
                     timeout0 = setTimeout(function() {
 						try{
-                        buzz.all().stop();
+                       // buzz.all().stop();
                         window["ques" + scene].play();
 					}catch(e){
 						alert("catch ex " + e);
@@ -4775,7 +4775,7 @@
                 }
 
                 function stopClick() {
-                    buzz.all().stop();
+                    //buzz.all().stop();
                     for (var i = 1; i <= 3; i++) {
                         sym.getSymbol("#Stage_scene1_symClick" + i + "_circle").stop(0)
                     }
@@ -4804,7 +4804,7 @@
                         "cursor": "default"
                     });
                     setTimeout(function() {
-                        buzz.all().stop();
+                       // buzz.all().stop();
                         var nn = 0;
                         if (scene < 5) {
                             nn = 1;
@@ -4967,7 +4967,7 @@
                         if (click_id == 1) {
                             disableClick();
                             RVal++;
-                            buzz.all().stop();
+                          //  buzz.all().stop();
                             window["CorrectAnswer"].play();
                             sym.$("#Stage_scene1_RightMark").css({
                                 "opacity": "1"
@@ -4984,13 +4984,13 @@
                             }
                             if (RVal == 2) {
                                 setTimeout(function() {
-                                    buzz.all().stop();
+                                //    buzz.all().stop();
                                     window["anim4"].play();
                                 }, 500)
                             }
                             if (RVal == 3) {
                                 setTimeout(function() {
-                                    buzz.all().stop();
+                                //    buzz.all().stop();
                                     window["anim5"].play();
                                 }, 500)
                             }
@@ -5000,7 +5000,7 @@
                                     "opacity": "0"
                                 });
                                 if (RVal != 2 && RVal != 3) {
-                                    buzz.all().stop();
+                                //    buzz.all().stop();
                                 }
                                 window["res" + RVal].play();
                                 timeout1 = setInterval(function() {
@@ -5024,7 +5024,7 @@
                                             sym.$("#Stage_scene1_BGsound").unbind("click touchend");
                                             sym.stopSound("BG");
                                             timeout0 = setTimeout(function() {
-                                                buzz.all().stop();
+                                              //  buzz.all().stop();
                                                 window["anim" + (RVal - 4)].play();
                                                 pos = 0;
                                                 timeout1 = 0;
@@ -5053,7 +5053,7 @@
                                                             sym.getSymbol("#Stage_scene1_sym_pics").stop("lbl7");
                                                             sym.getSymbol("#Stage_scene1_sym_pics_sym_pic7").play(0);
                                                             sym.stopSound("BG");
-                                                            buzz.all().stop();
+                                                         //   buzz.all().stop();
                                                             window["anim3"].play();
                                                             setTimeout(function() {
                                                                 endGame = true;
@@ -5118,7 +5118,7 @@
                         sym.getSymbol("sym_info").play(0);
 						
 						try{
-                        buzz.all().stop();
+                     //   buzz.all().stop();
                         window["click"].play();
 						}catch(e){
 							alert("catch ex" + e);
@@ -5155,7 +5155,7 @@
                         parent.t1(game_number, 6, RVal, num, 1);
                     } catch (err) {};
                     if (num == 0) {
-                        buzz.all().stop();
+                   //     buzz.all().stop();
                         window["result1"].play();
                         sym.getSymbol("sym_win").$("result1").css({
                             "opacity": "1"
@@ -5173,7 +5173,7 @@
                             parent.parent.setGameScore(3);
                         } catch (err) {}
                     } else if (num == 1 || num == 2 || num == 3) {
-                        buzz.all().stop();
+                     //   buzz.all().stop();
                         window["result2"].play();
                         sym.getSymbol("sym_win").$("result2").css({
                             "opacity": "1"
@@ -5188,7 +5188,7 @@
                             parent.parent.setGameScore(2);
                         } catch (err) {}
                     } else {
-                        buzz.all().stop();
+                     //   buzz.all().stop();
                         window["result3"].play();
                         sym.getSymbol("sym_win").$("result3").css({
                             "opacity": "1"
@@ -5225,7 +5225,7 @@
                             sym.playSound("BG", 0.07);
                         }
 						try{
-							buzz.all().stop();
+						//	buzz.all().stop();
 							window["click"].play();
 						}catch(e){
 							alert("catch ex: "+e);
@@ -5259,7 +5259,7 @@
                 function help() {
                     if (start1 == false) {
                         sym.stopSound("BG");
-                        buzz.all().stop();
+                        //buzz.all().stop();
                         window["click"].play();
                         seconds = 0;
                         timeout0 = setTimeout(function() {
