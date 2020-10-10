@@ -4995,12 +4995,15 @@
                                 sym.$("#Stage_scene1_RightMark").css({
                                     "opacity": "0"
                                 });
-                                if (RVal != 2 && RVal != 3) {
-                                    buzz.all().stop();
-                                }
-								console.log("timeout0 CheckAnswer Hey: 2");
-                                window["res" + RVal].play();
 								
+								buzz.all().stop();
+								 stopAudioTimeout = setTimeout(function() {
+									  if (RVal != 2 && RVal != 3) {
+										console.log("timeout0 CheckAnswer Hey: 2");
+                                window["res" + RVal].play();
+										}
+								 },250);
+                               
 								window["res" + RVal].onended=function(){
 									
 									console.log("timeout1 CheckAnswer Hey: 3");
