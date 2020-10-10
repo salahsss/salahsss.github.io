@@ -4808,7 +4808,7 @@
                         timeout1 = setInterval(function() {
 							console.log("inside interval hey: 5");
                             seconds = window["next" + nn].getTime();
-                            if (window["next" + nn].isEnded()) {
+                           // if (window["next" + nn].isEnded()) {
 								console.log("inside interval hey: 6");
                                 sym.$("#Stage_scene1_symNext").css({
                                     "opacity": "1",
@@ -4827,8 +4827,8 @@
                                 timeout1 = 0;
 								
 								console.log("inside interval hey: 8");
-                            }
-                        }, 1)
+                            //}
+                        }, 50)
                     }, 500)
                 }
 
@@ -5066,7 +5066,7 @@
                                             }, 1000)
                                         }
                                    // }
-                                }, 1)
+                                }, 50)
                             }, 1000)
                             try {
                                 parent.parent.addKidPoints(1);
