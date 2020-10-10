@@ -4739,8 +4739,14 @@
                 function playClick() {
                     seconds = 0;
                     timeout0 = setTimeout(function() {
-                        buzz.all().stop();
-                        window["ques" + scene].play();
+						try{
+							buzz.all().stop();
+							window["ques" + scene].play();
+						}
+						catch(e){
+							console.log("freezin");
+						}
+                        
                         timeint0 = setInterval(function() {
                             seconds = window["ques" + scene].getTime();
                             if (seconds == arrTime[scene][1]) {
