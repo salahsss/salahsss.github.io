@@ -4895,6 +4895,9 @@
                     sym.getSymbol("#Stage_scene1_sym_pics").stop("lbl" + (RVal + 1))
                     sym.getSymbol("#Stage_scene1_resultBoard").stop("lbl" + (RVal + 1) + "_1");
                     
+					if(!firstTime){
+						enableClick();
+					}
                 }
 
                 function enableClick() {
