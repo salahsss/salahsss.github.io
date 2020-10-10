@@ -4808,7 +4808,7 @@
                         timeout1 = setInterval(function() {
 							console.log("inside interval hey: 5");
                             seconds = window["next" + nn].getTime();
-                           // if (window["next" + nn].isEnded()) {
+                            if (window["next" + nn].isEnded()) {
 								console.log("inside interval hey: 6");
                                 sym.$("#Stage_scene1_symNext").css({
                                     "opacity": "1",
@@ -4827,7 +4827,7 @@
                                 timeout1 = 0;
 								
 								console.log("inside interval hey: 8");
-                            //}
+                            }
                         }, 50)
                     }, 500)
                 }
@@ -5001,13 +5001,16 @@
 								console.log("timeout0 CheckAnswer Hey: 2");
                                 window["res" + RVal].play();
                                 timeout1 = setInterval(function() {
-												console.log("timeout1 CheckAnswer Hey: 2");						
+									console.log("timeout1 CheckAnswer Hey: 2");						
                                     seconds = window["res" + RVal].getTime();
-                                  //  if (window["res" + RVal].isEnded()) {
+									console.log("timeout1 CheckAnswer Hey: 2 seconds: " + seconds);						
+
+                                    if (window["res" + RVal].isEnded()) {
 										console.log("timeout1 CheckAnswer Hey: 3");
                                         try {
                                             clearInterval(timeout1);
                                         } catch (err) {}
+										console.log("timeout1 CheckAnswer Hey: 4");
                                         timeout1 = 0;
                                         if (RVal < 5) {
                                             if (RVal != 6) {
@@ -5062,10 +5065,10 @@
                                                             }, 4000)
                                                         }
                                                     }
-                                                }, 1)
+                                                }, 50)
                                             }, 1000)
                                         }
-                                   // }
+                                    }
                                 }, 50)
                             }, 1000)
                             try {
