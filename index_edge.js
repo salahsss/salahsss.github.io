@@ -4808,7 +4808,7 @@
                         timeout1 = setInterval(function() {
 							console.log("inside interval hey: 5");
                             seconds = window["next" + nn].getTime();
-                            if (window["next" + nn].isEnded() || seconds == 0) {
+                            if (window["next" + nn].isEnded() || seconds === 0) {
 								console.log("inside interval hey: 6");
                                 sym.$("#Stage_scene1_symNext").css({
                                     "opacity": "1",
@@ -5005,7 +5005,7 @@
                                     seconds = window["res" + RVal].getTime();
 									console.log("timeout1 CheckAnswer Hey: 2 seconds: " + seconds);						
 
-                                    if (window["res" + RVal].isEnded() || seconds == 0) {
+                                    if (window["res" + RVal].isEnded() || seconds === 0) {
 										console.log("timeout1 CheckAnswer Hey: 3");
                                         try {
                                             clearInterval(timeout1);
@@ -5036,7 +5036,7 @@
                                                     seconds = window["anim" + (RVal - 4)].getTime();
                                                     pos = seconds * 1000;
                                                     sym.getSymbol("#Stage_scene1_sym_txt_txt" + (RVal - 4)).stop(pos)
-                                                    if (window["anim" + (RVal - 4)].isEnded() || seconds == 0) {
+                                                    if (window["anim" + (RVal - 4)].isEnded() || seconds === 0) {
                                                         try {
                                                             clearInterval(timeout1);
                                                         } catch (err) {}
