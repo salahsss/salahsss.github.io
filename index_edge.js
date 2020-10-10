@@ -4992,7 +4992,7 @@
                                 if (RVal != 2 && RVal != 3) {
                                     buzz.all().stop();
                                 }
-								alert("setTimeout CheckAnswer Hey: 2");
+								//alert("setTimeout CheckAnswer Hey: 2");
                                 
                                 timeout1 = setInterval(function() {
 									
@@ -5059,7 +5059,7 @@
                                             }, 1000)
                                         }
                                     }
-                                }, 50)
+                                }, 2000)
                             }, 1000)
                             try {
                                 parent.parent.addKidPoints(1);
