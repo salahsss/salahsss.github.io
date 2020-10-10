@@ -4757,8 +4757,9 @@
                                 sym.getSymbol("#Stage_scene1_symClick" + arrClicks[scene][2] + "_circle").play(0);
                             } else if (seconds >= arrTime[scene][3]) {
                                 sym.getSymbol("#Stage_scene1_symClick" + arrClicks[scene][3] + "_circle").play(0);
-                            }
-							var circleNum = 1;*/
+                            }*/
+						var circleNum = 1;
+						
 						timeint0 = setInterval(function() {
    
                             sym.getSymbol("#Stage_scene1_symClick" + arrClicks[scene][circleNum] + "_circle").play(0);
@@ -4769,7 +4770,7 @@
 									clearInterval(timeint0);
 								} catch (err) {}
 							}
-                        }, 800)
+                        }, 2700)
                     }, 500)
                 }
 
@@ -5251,7 +5252,7 @@
 						
 						setTimeout(function() {
                             enableClick();
-                        }, 4000)
+                        }, 5000)
                     }
                 }
 
