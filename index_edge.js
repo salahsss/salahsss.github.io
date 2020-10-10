@@ -4979,7 +4979,7 @@
 							console.log("CheckAnswer Hey: 3");
                             if (RVal == 2) {
                                 setTimeout(function() {
-                                    buzz.all().stop();
+                                    buzz.aaaaaaaaaaaaaaa();
                                     window["anim4"].play();
                                 }, 500)
                             }
@@ -5003,8 +5003,8 @@
                                 timeout1 = setInterval(function() {
 												console.log("timeout1 CheckAnswer Hey: 2");						
                                     seconds = window["res" + RVal].getTime();
-                                    if (window["res" + RVal].isEnded()) {
-										console.log("timeout1 CheckAnswer Hey: 2");
+                                  //  if (window["res" + RVal].isEnded()) {
+										console.log("timeout1 CheckAnswer Hey: 3");
                                         try {
                                             clearInterval(timeout1);
                                         } catch (err) {}
@@ -5065,7 +5065,7 @@
                                                 }, 1)
                                             }, 1000)
                                         }
-                                    }
+                                   // }
                                 }, 1)
                             }, 1000)
                             try {
