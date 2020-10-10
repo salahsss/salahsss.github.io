@@ -4953,11 +4953,13 @@
                         if (click_id == 1) {
                             disableClick();
                             RVal++;
+							alert("CheckAnswer Hey: 1");
                             buzz.all().stop();
                             window["CorrectAnswer"].play();
                             sym.$("#Stage_scene1_RightMark").css({
                                 "opacity": "1"
                             });
+									alert("CheckAnswer Hey: 2");
                             sym.getSymbol("#Stage_scene1_resultBoard").stop("lbl" + RVal + "_2");
                             sym.getSymbol("#Stage_scene1_sym_pics_sym_pic" + RVal).play(0);
                             sym.getSymbol("#Stage_scene1_sym_lamp").play("lbl" + RVal);
@@ -4968,6 +4970,7 @@
                             if (RVal > 4) {
                                 sym.getSymbol("#Stage_scene1_sym_txt").stop("lbl" + (RVal - 4));
                             }
+							alert("CheckAnswer Hey: 3");
                             if (RVal == 2) {
                                 setTimeout(function() {
                                     buzz.all().stop();
@@ -4980,6 +4983,7 @@
                                     window["anim5"].play();
                                 }, 500)
                             }
+							alert("CheckAnswer Hey: 4");
                             timeout0 = 0;
                             timeout0 = setTimeout(function() {
                                 sym.$("#Stage_scene1_RightMark").css({
@@ -4988,10 +4992,12 @@
                                 if (RVal != 2 && RVal != 3) {
                                     buzz.all().stop();
                                 }
+								alert("setTimeout CheckAnswer Hey: 2");
                                 window["res" + RVal].play();
                                 timeout1 = setInterval(function() {
                                     seconds = window["res" + RVal].getTime();
                                     if (window["res" + RVal].isEnded()) {
+										alert("setTimeout 2 CheckAnswer Hey: 2");
                                         try {
                                             clearInterval(timeout1);
                                         } catch (err) {}
