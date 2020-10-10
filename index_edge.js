@@ -4749,7 +4749,7 @@
 					}catch(e){
 						alert("catch ex " + e);
 					}
-                        timeint0 = setInterval(function() {
+                     /*   timeint0 = setInterval(function() {
                             seconds = window["ques" + scene].getTime();
                             if (seconds >= arrTime[scene][1] && seconds < arrTime[scene][2]) {
                                 sym.getSymbol("#Stage_scene1_symClick" + arrClicks[scene][1] + "_circle").play(0);
@@ -4758,7 +4758,18 @@
                             } else if (seconds >= arrTime[scene][3]) {
                                 sym.getSymbol("#Stage_scene1_symClick" + arrClicks[scene][3] + "_circle").play(0);
                             }
-                        }, 1)
+							var circleNum = 1;*/
+						timeint0 = setInterval(function() {
+   
+                            sym.getSymbol("#Stage_scene1_symClick" + arrClicks[scene][circleNum] + "_circle").play(0);
+							circleNum++;
+							
+							if(circleNum == 4){
+								 try {
+									clearInterval(timeint0);
+								} catch (err) {}
+							}
+                        }, 800)
                     }, 500)
                 }
 
