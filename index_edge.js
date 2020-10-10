@@ -4646,9 +4646,12 @@
                         }
                     });
                 });
-                nextStep()
+				alert("before init");
+               // nextStep()
 
                 function init() {
+				alert("start init");
+
                     for (var i = 0; i < ar_Sounds1.length; i++) {
                         window["" + ar_Sounds1[i]] = new buzz.sound("media/" + ar_Sounds1[i] + "", {
                             formats: ["mp3", "ogg", "wav"],
@@ -4657,6 +4660,7 @@
                             loop: false
                         });
                     }
+					
                     ar_Sounds = ["BG", "title"];
                     Audios(ar_Sounds);
                     sym.$("#Stage_scene1_Rect").css({
@@ -4724,7 +4728,7 @@
                             seconds = 0
                             timeout1 = setInterval(function() {
                                 seconds = window["title"].getTime();
-                                if (seconds == 1.74) {
+                                if (seconds >= 1.74) {
                                     sym.getSymbol("#Stage_sym_intro").play("lblStart");
                                     try {
                                         clearInterval(timeout1);
@@ -4739,15 +4743,19 @@
                 function playClick() {
                     seconds = 0;
                     timeout0 = setTimeout(function() {
+						try{
                         buzz.all().stop();
                         window["ques" + scene].play();
+					}catch(e){
+						alert("catch ex " + e);
+					}
                         timeint0 = setInterval(function() {
                             seconds = window["ques" + scene].getTime();
-                            if (seconds == arrTime[scene][1]) {
+                            if (seconds >= arrTime[scene][1] && seconds < arrTime[scene][2]) {
                                 sym.getSymbol("#Stage_scene1_symClick" + arrClicks[scene][1] + "_circle").play(0);
-                            } else if (seconds == arrTime[scene][2]) {
+                            } else if (seconds >= arrTime[scene][2] && seconds < arrTime[scene][3]) {
                                 sym.getSymbol("#Stage_scene1_symClick" + arrClicks[scene][2] + "_circle").play(0);
-                            } else if (seconds == arrTime[scene][3]) {
+                            } else if (seconds >= arrTime[scene][3]) {
                                 sym.getSymbol("#Stage_scene1_symClick" + arrClicks[scene][3] + "_circle").play(0);
                             }
                         }, 1)
@@ -4839,6 +4847,7 @@
                 }
 
                 function nextStep() {
+					alert("nextStep");
                     if (firsetTime == true) {
                         stopClick();
                         playClick();
@@ -4847,6 +4856,8 @@
                     if (scene == 6) {
                         sym.getSymbol("#Stage_scene1_sym_txt").stop(0);
                     }
+										alert("nextStep 1");
+
                     DisableNext();
                     changePlace(arr_place);
                     if (RVal >= 1) {
@@ -4866,6 +4877,8 @@
                         click_id = 0;
                         tries = 0;
                     }
+															alert("nextStep 2");
+
                     sym.getSymbol("#Stage_scene1_sym_pics_sym_pic" + (RVal + 1)).stop(0)
                     sym.getSymbol("#Stage_scene1_sym_pics").stop("lbl" + (RVal + 1))
                     sym.getSymbol("#Stage_scene1_resultBoard").stop("lbl" + (RVal + 1) + "_1");
@@ -5086,22 +5099,31 @@
                 }
 
                 function startMedia() {
+					alert("start media");
                     if (start1 == false) {
                         start1 = true;
                         sym.stop("lbl2");
                         sym.getSymbol("sym_info").play(0);
+						
+						try{
                         buzz.all().stop();
                         window["click"].play();
+						}catch(e){
+							alert("catch ex" + e);
+						}
+						
+						alert("start media 2 ");
                         seconds = 0;
                         timeout0 = setTimeout(function() {
+							alert("start media 3");
                             window["info"].play();
                             timeout1 = setInterval(function() {
                                 seconds = window["info"].getTime();
-                                if (seconds == 15.11) {
+                                if (seconds >= 15.11 && seconds < 19.49) {
                                     sym.getSymbol("#Stage_sym_info_sound").play(0);
-                                } else if (seconds == 19.49) {
+                                } else if (seconds >= 19.49 && seconds < 23.92) {
                                     sym.getSymbol("#Stage_sym_info_info").play(0);
-                                } else if (seconds == 23.92) {
+                                } else if (seconds >= 23.92) {
                                     sym.getSymbol("#Stage_sym_info_home").play(0);
                                     try {
                                         clearInterval(timeout1);
@@ -5176,6 +5198,7 @@
                 }
 
                 function closeInfo() {
+					alert("closeInfo");
                     if (start1 == false) {
                         clearTimeout(timeout0);
                         try {
@@ -5189,8 +5212,13 @@
                         if (soundOff == false) {
                             sym.playSound("BG", 0.07);
                         }
-                        buzz.all().stop();
-                        window["click"].play();
+						try{
+							buzz.all().stop();
+							window["click"].play();
+						}catch(e){
+							alert("catch ex: "+e);
+						}
+						alert("closeInfo 2 ");
                         start1 = true;
                         if (endGame == false) {
                             sym.stop("lbl3");
