@@ -4990,7 +4990,7 @@
                                     "opacity": "0"
                                 });
                                 if (RVal != 2 && RVal != 3) {
-                                    buzz.all().stop();
+                                 //   buzz.all().stop();
                                 }
 								alert("setTimeout CheckAnswer Hey: 2");
                                 window["res" + RVal].play();
@@ -5057,7 +5057,7 @@
                                             }, 1000)
                                         }
                                     }
-                                }, 100)
+                                }, 1)
                             }, 1000)
                             try {
                                 parent.parent.addKidPoints(1);
