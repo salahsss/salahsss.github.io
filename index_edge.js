@@ -4992,14 +4992,13 @@
                                 if (RVal != 2 && RVal != 3) {
                                     buzz.all().stop();
                                 }
-								//console.log("setTimeout CheckAnswer Hey: 2");
-                                
+								console.log("timeout0 CheckAnswer Hey: 2");
+                                window["res" + RVal].play();
                                 timeout1 = setInterval(function() {
-									
-									window["res" + RVal].play();
+												console.log("timeout1 CheckAnswer Hey: 2");						
                                     seconds = window["res" + RVal].getTime();
                                     if (window["res" + RVal].isEnded()) {
-										console.log("setTimeout 2 CheckAnswer Hey: 2");
+										console.log("timeout1 CheckAnswer Hey: 2");
                                         try {
                                             clearInterval(timeout1);
                                         } catch (err) {}
@@ -5061,7 +5060,7 @@
                                             }, 1000)
                                         }
                                     }
-                                }, 2000)
+                                }, 1)
                             }, 1000)
                             try {
                                 parent.parent.addKidPoints(1);
