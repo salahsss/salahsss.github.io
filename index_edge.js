@@ -4686,8 +4686,7 @@
 							});						
 						}
 						
-						window["anim1"].bind("loadeddata", function () {						
-							alert("anim1");
+						window["anim1"].bind("loadeddata", function () {													
 							realInit();											
 						});
 					
@@ -4781,11 +4780,11 @@
                 function playClick() {
                     seconds = 0;
                     timeout0 = setTimeout(function() {
-						try{
+					try{
                         buzz.all().stop();
                         window["ques" + scene].play();
 					}catch(e){
-						alert("error " + e);
+						//alert("error " + e);
 					}
 							 playClickAnimAfter(1);
 							 playClickAnimAfter(2);
@@ -5162,7 +5161,7 @@
 							window["click"].play();
 							window["click"].unloop();
 						}catch(e){
-							alert("issue");
+							//alert("issue");
 						}
 												
                         seconds = 0;
