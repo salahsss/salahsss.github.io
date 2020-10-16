@@ -4691,11 +4691,11 @@
                             formats: ["mp3", "ogg", "wav"],
                             preload: true,
                             autoplay: false,
-                            loop: false,
-							webAudioApi:true
+                            loop: false							
                         });						
                     }
 					window["anim1"].bind("loadeddata", function () {						
+						alert("anim1");
 						realInit();											
 					});
 					
