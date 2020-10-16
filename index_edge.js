@@ -4686,12 +4686,34 @@
                         });						
                     }
 					
+					for (var i = 0; i < ar_Sounds1.length; i++) {
+                        window["" + ar_Sounds1[i]] = new buzz.sound("media/" + ar_Sounds1[i] + "", {
+                            formats: ["mp3", "ogg", "wav"],
+                            preload: true,
+                            autoplay: false,
+                            loop: false,
+							webAudioApi:true
+                        });						
+                    }
+					window["anim1"].bind("loadeddata", function () {						
+						realInit();											
+					});
+					
                     ar_Sounds = ["BG", "title"];
                     Audios(ar_Sounds);
                     sym.$("#Stage_scene1_Rect").css({
                         "display": "none"
                     });
-                    sym.$("#Stage_sym_intro_Ply1").unbind("click touchend");
+                    
+		
+                }
+				
+				
+				function realInit(){
+					
+					
+					
+					sym.$("#Stage_sym_intro_Ply1").unbind("click touchend");
                     sym.$("#Stage_sym_intro_Ply1").bind("click touchend", startMedia);
                     sym.$("#Stage_scene1_sym_home").unbind("click touchend");
                     sym.$("#Stage_scene1_sym_home").bind("click touchend", reset);
@@ -4759,8 +4781,8 @@
                             }, 2100);
                         }
                     });
-		
-                }
+				}
+				
 
                 function playClick() {
                     seconds = 0;
