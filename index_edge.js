@@ -4592,16 +4592,20 @@
                     [0, 6.16, 10.62, 12.56]
                 ]
 				
-				controlAnimIntro =  [15000, 17500, 19200];
+				controlAnimIntro =  [15000, 19000, 23000];
+				controlAnimHelp =  [15000, 19000, 23000];
+				
 				controlAnimTimes = [
                     [0, 0, 0, 0],
                     [0, 2700, 5000, 7500],
-                    [0, 5300, 8300, 10300],
+                    [0, 6100, 10000, 12500],
 					[0, 4500, 7000, 9100],
-					[0, 5000, 7500, 9100],
-					[0, 5700, 8000, 9900],
-					[0, 5700, 8500, 10100]
-                ]
+					[0, 7200, 10000, 12000],
+					[0, 5700, 8000, 10300],
+					[0, 5700, 9500, 11200]
+                ];
+				
+				timeoutControl= [0,0,0,0];
 				
 				
 				
@@ -4660,11 +4664,10 @@
                         }
                     });
                 });
-				alert("before init");
+			
                 nextStep();
 
                 function init() {
-				alert("start init");
 
                     for (var i = 0; i < ar_Sounds1.length; i++) {
                         window["" + ar_Sounds1[i]] = new buzz.sound("media/" + ar_Sounds1[i] + "", {
@@ -4725,13 +4728,11 @@
                         });
                     }
                     $("#Stage_start_start3").bind('click touchend', function() {
-					    alert("Stage_start_start3: ");
-
+					  
                         try {
                             parent.t1(game_number, 0, 0, 0, 2);
                         } catch (err) {
-							
-							alert("catch: "+err);
+				
 						};
                         if (audioOn1 == false) {
                             audioOn1 = true;
@@ -4750,21 +4751,18 @@
                             }, 2100);
                         }
                     });
-					
-					alert("finish init");
+		
                 }
 
                 function playClick() {
                     seconds = 0;
                     timeout0 = setTimeout(function() {
 						try{
-                       // buzz.all().stop();
+                        buzz.all().stop();
                         window["ques" + scene].play();
 					}catch(e){
-						alert("catch ex " + e);
+					
 					}
-							 alert("start click anim");
-							
 							 playClickAnimAfter(1);
 							 playClickAnimAfter(2);
 							 playClickAnimAfter(3);
@@ -4772,13 +4770,13 @@
                 }
 				
 				function playClickAnimAfter(circleNum){
-					var timeout3 = setTimeout(function(){
+					timeoutControl[circleNum-1] = setTimeout(function(){
 								sym.getSymbol("#Stage_scene1_symClick" + arrClicks[scene][circleNum] + "_circle").play(0);
 					}, controlAnimTimes[scene][circleNum]);
 				}
 
                 function stopClick() {
-                    //buzz.all().stop();
+                    buzz.all().stop();
                     for (var i = 1; i <= 3; i++) {
                         sym.getSymbol("#Stage_scene1_symClick" + i + "_circle").stop(0)
                     }
@@ -4817,7 +4815,7 @@
                         window["next" + nn].play();
                         timeout1 = 0;
                         seconds = 0
-						alert(nn);
+						
 					 	timeout1 = setTimeout(function() {
                              
                                 sym.$("#Stage_scene1_symNext").css({
@@ -4830,27 +4828,8 @@
                                     nextStep();
                                 });
                            
-                        }, 2000)//
-						
-                      /*  timeout1 = setInterval(function() {
-                            seconds = window["next" + nn].getTime();
-                            if (window["next" + nn].isEnded()) {
-                                sym.$("#Stage_scene1_symNext").css({
-                                    "opacity": "1",
-                                    "cursor": "pointer"
-                                });
-                                sym.getSymbol("#Stage_scene1_symNext").play(0);
-                                sym.$("#Stage_scene1_symNext").unbind("click touchend");
-                                sym.$("#Stage_scene1_symNext").bind("click touchend", function() {
-                                    nextStep();
-                                });
-                                try {
-                                    clearInterval(timeout1);
-                                } catch (err) {}
-                                timeout1 = 0;
-                            }
-                        }, 1)*/
-                    }, 1500)
+                        }, 800)						
+                    }, 500)
                 }
 
                 function changePlace(arr_place) {
@@ -4877,7 +4856,7 @@
                 }
 
                 function nextStep() {
-					alert("nextStep");
+					
                     if (firsetTime == true) {
                         stopClick();
                         playClick();
@@ -4886,7 +4865,6 @@
                     if (scene == 6) {
                         sym.getSymbol("#Stage_scene1_sym_txt").stop(0);
                     }
-										alert("nextStep 1");
 
                     DisableNext();
                     changePlace(arr_place);
@@ -4907,20 +4885,14 @@
                         click_id = 0;
                         tries = 0;
                     }
-															alert("nextStep 2");
+					
 
                     sym.getSymbol("#Stage_scene1_sym_pics_sym_pic" + (RVal + 1)).stop(0)
                     sym.getSymbol("#Stage_scene1_sym_pics").stop("lbl" + (RVal + 1))
                     sym.getSymbol("#Stage_scene1_resultBoard").stop("lbl" + (RVal + 1) + "_1");
                     
-					alert("finish nextStep");
-
-					//if(!firsetTime){
 					enableClick();
-					//}
 					
-					alert("finish nextStep");
-
                 }
 
                 function enableClick() {
@@ -4988,13 +4960,20 @@
                 }
 
                 function CheckAnswer() {
-					alert("check answer");
+					
+					try{
+						clearTimeout(timeoutControl[0]);
+						clearTimeout(timeoutControl[1]);
+						clearTimeout(timeoutControl[2]);
+					}catch(e){						
+					}
+					
                     if (check == false) {
                         check = true;
                         if (click_id == 1) {
                             disableClick();
                             RVal++;
-                          //  buzz.all().stop();
+                            buzz.all().stop();
                             window["CorrectAnswer"].play();
                             sym.$("#Stage_scene1_RightMark").css({
                                 "opacity": "1"
@@ -5011,17 +4990,17 @@
                             }
                             if (RVal == 2) {
                                 setTimeout(function() {
-                                //    buzz.all().stop();
+                                    buzz.all().stop();
                                     window["anim4"].play();
                                 }, 500)
                             }
                             if (RVal == 3) {
                                 setTimeout(function() {
-                                //    buzz.all().stop();
+                                    buzz.all().stop();
                                     window["anim5"].play();
                                 }, 500)
                             }
-							alert("before setTimeout");
+							
                             timeout0 = 0;
                             timeout0 = setTimeout(function() {
                                 sym.$("#Stage_scene1_RightMark").css({
@@ -5030,126 +5009,17 @@
                                 if (RVal != 2 && RVal != 3) {
                                     buzz.all().stop();
                                 }
-                                window["res" + RVal].play();
-								var timeoutActivateButton = setTimeout(function() {
-									alert("step RVal: "+RVal);
-									 if (RVal < 5){
-										
-											EnableNext();
-											sym.$("#Stage_scene1_Rect").css({
-													"display": "none"
-											});
-									 }else {
-										 alert("step else RVal: "+RVal);
-										    sym.$("#Stage_scene1_BGsound").css({
-                                                "cursor": "default"
-                                            });
-                                            sym.$("#Stage_scene1_BGsound").unbind("click touchend");
-                                            sym.stopSound("BG");
-                                            timeout0 = setTimeout(function() {
-											    alert("setTimeout1 step else RVal: "+RVal);
-                                                buzz.all().stop();
-                                                window["anim" + (RVal - 4)].play();
-                                                pos = 0;
-                                                timeout1 = 0;												
-												seconds = window["anim" + (RVal - 4)].getTime();
-                                                pos = seconds * 1000;
-                                                sym.getSymbol("#Stage_scene1_sym_txt_txt" + (RVal - 4)).stop(pos);
-												
-												timeout1 = setTimeout(function() {	
-														alert("setTimeout2 step else RVal: "+RVal);												
-                                                        if (RVal != 6) {
-                                                            EnableNext();
-                                                            sym.$("#Stage_scene1_Rect").css({
-                                                                "display": "none"
-                                                            });
-                                                            if (soundOff == false) {
-                                                                sym.playSound("BG", 0.07);
-                                                                sym.$("#Stage_scene1_BGsound").css({
-                                                                    "cursor": "pointer"
-                                                                });
-                                                                sym.$("#Stage_scene1_BGsound").bind("click touchend", soundBG);
-                                                            }
-                                                        } else {
-                                                            sym.getSymbol("#Stage_scene1_sym_pics").stop("lbl7");
-                                                            sym.getSymbol("#Stage_scene1_sym_pics_sym_pic7").play(0);
-                                                            sym.stopSound("BG");
-                                                            buzz.all().stop();
-                                                            window["anim3"].play();
-                                                            setTimeout(function() {
-                                                                endGame = true;
-                                                                resultStar();
-                                                            }, 4000);
-                                                        }
-													}, 10000);//
-											}, 1000);
-									 }											
-								},1000);//1000, 2000,3000
+														
+								try{
+									window["res" + RVal].play();								
+								}catch(e){	
+									afterCheckAnswer();								
+								}
 								
-                              /*  timeout1 = setInterval(function() {
-                                    seconds = window["res" + RVal].getTime();
-                                    if (window["res" + RVal].isEnded()) {
-										alert("step" + RVal);
-                                        try {
-                                            clearInterval(timeout1);
-                                        } catch (err) {}
-                                        timeout1 = 0;
-                                        if (RVal < 5) {
-                                            
-                                            EnableNext();
-                                            sym.$("#Stage_scene1_Rect").css({
-                                                 "display": "none"
-                                            });
-                                            
-                                        } else {
-                                            sym.$("#Stage_scene1_BGsound").css({
-                                                "cursor": "default"
-                                            });
-                                            sym.$("#Stage_scene1_BGsound").unbind("click touchend");
-                                            sym.stopSound("BG");
-                                            timeout0 = setTimeout(function() {
-                                              //  buzz.all().stop();
-                                                window["anim" + (RVal - 4)].play();
-                                                pos = 0;
-                                                timeout1 = 0;
-                                                timeout1 = setInterval(function() {
-                                                    seconds = window["anim" + (RVal - 4)].getTime();
-                                                    pos = seconds * 1000;
-                                                    sym.getSymbol("#Stage_scene1_sym_txt_txt" + (RVal - 4)).stop(pos);
-                                                    if (window["anim" + (RVal - 4)].isEnded()) {
-                                                        try {
-                                                            clearInterval(timeout1);
-                                                        } catch (err) {}
-                                                        timeout1 = 0;
-                                                        if (RVal != 6) {
-                                                            EnableNext();
-                                                            sym.$("#Stage_scene1_Rect").css({
-                                                                "display": "none"
-                                                            });
-                                                            if (soundOff == false) {
-                                                                sym.playSound("BG", 0.07);
-                                                                sym.$("#Stage_scene1_BGsound").css({
-                                                                    "cursor": "pointer"
-                                                                });
-                                                                sym.$("#Stage_scene1_BGsound").bind("click touchend", soundBG);
-                                                            }
-                                                        } else {
-                                                            sym.getSymbol("#Stage_scene1_sym_pics").stop("lbl7");
-                                                            sym.getSymbol("#Stage_scene1_sym_pics_sym_pic7").play(0);
-                                                            sym.stopSound("BG");
-                                                         //   buzz.all().stop();
-                                                            window["anim3"].play();
-                                                            setTimeout(function() {
-                                                                endGame = true;
-                                                                resultStar();
-                                                            }, 4000)
-                                                        }
-                                                    }
-                                                }, 1)
-                                            }, 1000)
-                                        }
-                                    }
-                                }, 1)*/
+								window["res" + RVal].bind("ended", function () {
+								     afterCheckAnswer();					
+								});
+
                             }, 1000)
                             try {
                                 parent.parent.addKidPoints(1);
@@ -5193,40 +5063,97 @@
                         }, 500)
                     }
                 }
+				
+				function afterCheckAnswer(){
+					
+					 if (RVal < 5){										
+							EnableNext();
+							sym.$("#Stage_scene1_Rect").css({
+									"display": "none"
+							});
+					 }else {
+							
+							sym.$("#Stage_scene1_BGsound").css({
+								"cursor": "default"
+							});
+							sym.$("#Stage_scene1_BGsound").unbind("click touchend");
+							sym.stopSound("BG");
+							timeout0 = setTimeout(function() {
+								
+								buzz.all().stop();
+								try{
+									window["anim" + (RVal - 4)].play();
+								}catch(e){	
+								    console.log("Error: Can't run audio " + "anim" + (RVal - 4));
+								    afterCheckAnswerLast2Steps();									
+								}
+								
+								timeout1 = 0;												
+								seconds = window["anim" + (RVal - 4)].getTime();
+								pos = seconds * 1000;
+								sym.getSymbol("#Stage_scene1_sym_txt_txt" + (RVal - 4)).stop(pos);
+								
+								window["anim" + (RVal - 4)].bind("ended", function () {
+									afterCheckAnswerLast2Steps();
+								});
+							}, 1000);
+					 }					
+				}
+				function afterCheckAnswerLast2Steps(){
+																	
+					if (RVal != 6) {
+						EnableNext();
+						sym.$("#Stage_scene1_Rect").css({
+							"display": "none"
+						});
+						if (soundOff == false) {
+							sym.playSound("BG", 0.07);
+							sym.$("#Stage_scene1_BGsound").css({
+								"cursor": "pointer"
+							});
+							sym.$("#Stage_scene1_BGsound").bind("click touchend", soundBG);
+						}
+					} else {
+						sym.getSymbol("#Stage_scene1_sym_pics").stop("lbl7");
+						sym.getSymbol("#Stage_scene1_sym_pics_sym_pic7").play(0);
+						sym.stopSound("BG");
+						buzz.all().stop();
+						window["anim3"].play();
+						setTimeout(function() {
+							endGame = true;
+							resultStar();
+						}, 4000);
+					}					
+				}
 
                 function startMedia() {
-					alert("start media");
+				
                     if (start1 == false) {
                         start1 = true;
                         sym.stop("lbl2");
                         sym.getSymbol("sym_info").play(0);
 						
 						try{
-                     //   buzz.all().stop();
-                        window["click"].play();
+							buzz.all().stop();
+							window["click"].play();
 						}catch(e){
-							alert("catch ex" + e);
 						}
-						
-						alert("start media 2 ");
+												
                         seconds = 0;
                        
-						alert("start media 3");
-                        window["info"].play();
-							
-						var timeout1 = setTimeout(function(){
+                        window["info"].play();							
+						timeoutControl[0] = setTimeout(function(){
 							playAnim("#Stage_sym_info_sound");
 						}, controlAnimIntro[0]);
 							
-						var timeout2 = setTimeout(function(){
+						timeoutControl[1] = setTimeout(function(){
 							playAnim("#Stage_sym_info_info");
 						}, controlAnimIntro[1]);
 							 
-						var timeout3 = setTimeout(function(){
+						timeoutControl[2] = setTimeout(function(){
 							playAnim("#Stage_sym_info_home");
 						}, controlAnimIntro[2]);
-							
-                        
+							                        
                         setTimeout(function() {
                             start1 = false;
                         }, 500)
@@ -5242,7 +5169,7 @@
                         parent.t1(game_number, 6, RVal, num, 1);
                     } catch (err) {};
                     if (num == 0) {
-                   //     buzz.all().stop();
+                        buzz.all().stop();
                         window["result1"].play();
                         sym.getSymbol("sym_win").$("result1").css({
                             "opacity": "1"
@@ -5260,7 +5187,7 @@
                             parent.parent.setGameScore(3);
                         } catch (err) {}
                     } else if (num == 1 || num == 2 || num == 3) {
-                     //   buzz.all().stop();
+                        buzz.all().stop();
                         window["result2"].play();
                         sym.getSymbol("sym_win").$("result2").css({
                             "opacity": "1"
@@ -5275,7 +5202,7 @@
                             parent.parent.setGameScore(2);
                         } catch (err) {}
                     } else {
-                     //   buzz.all().stop();
+                        buzz.all().stop();
                         window["result3"].play();
                         sym.getSymbol("sym_win").$("result3").css({
                             "opacity": "1"
@@ -5297,14 +5224,20 @@
                 }
 
                 function closeInfo() {
-					alert("closeInfo");
+					
+					try{
+						clearTimeout(timeoutControl[0]);
+						clearTimeout(timeoutControl[1]);
+						clearTimeout(timeoutControl[2]);
+					}catch(e){						
+					}
+					
                     if (start1 == false) {
                         clearTimeout(timeout0);
                         try {
                             clearInterval(timeout1);
                         } catch (err) {}
-						
-						
+												
                         if (firsetTime == false) {
                             firsetTime = true;
                             playClick()
@@ -5317,9 +5250,9 @@
 							buzz.all().stop();
 							window["click"].play();
 						}catch(e){
-							alert("catch ex: "+e);
+							
 						}
-						alert("closeInfo 2 ");
+					
                         start1 = true;
                         if (endGame == false) {
                             sym.stop("lbl3");
@@ -5346,28 +5279,26 @@
                 }
 
                 function help() {
+				
                     if (start1 == false) {
                         sym.stopSound("BG");
-                        //buzz.all().stop();
+                        buzz.all().stop();
                         window["click"].play();
                         seconds = 0;
+						
                         timeout0 = setTimeout(function() {
                             window["info"].play();
-                            timeout1 = setInterval(function() {
-                                seconds = window["info"].getTime();
-                                if (seconds == 15.11) {
-                                    sym.getSymbol("#Stage_sym_info_sound").play(0);
-                                } else if (seconds == 19.49) {
-                                    sym.getSymbol("#Stage_sym_info_info").play(0);
-                                } else if (seconds == 23.92) {
-                                    sym.getSymbol("#Stage_sym_info_home").play(0);
-                                    try {
-                                        clearInterval(timeout1);
-                                    } catch (err) {}
-                                    timeout1 = 0;
-                                }
-                            }, 1)
-                        }, 500)
+                            timeoutControl[0] = setTimeout(function() {
+							   sym.getSymbol("#Stage_sym_info_sound").play(0);
+							}, controlAnimHelp[0]);
+							timeoutControl[1] = setTimeout(function() {
+								   sym.getSymbol("#Stage_sym_info_info").play(0);
+								}, controlAnimHelp[1]);
+							timeoutControl[2] = setTimeout(function() {
+								   sym.getSymbol("#Stage_sym_info_home").play(0);
+								}, controlAnimHelp[2]);
+                        }, 500);
+						
                         start1 = true;
                         if (endGame == true) {
                             sym.$("sym_info").css({
@@ -5392,7 +5323,7 @@
 
                 function Audios(soundFiles) {
                     if (typeof soundFiles !== 'undefined' && soundFiles.length > 0) {
-                        var jAudioHtml = '<audio id="mainAudio" src="media/' + soundFiles[0] + '.mp3"></audio>';
+                        var jAudioHtml = '<audio id="mainAudio" onended="myFunction()" src="media/' + soundFiles[0] + '.mp3"></audio>';
                         sym.$(document.body).append(jAudioHtml);
                         var jAudio = document.getElementById("mainAudio");
                         sym.playSound = function(request, val) {
