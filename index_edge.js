@@ -4681,19 +4681,11 @@
                             formats: ["mp3", "ogg", "wav"],
                             preload: true,
                             autoplay: false,
-                            loop: false,
-							webAudioApi:true
+                            loop: false
                         });						
                     }
 					
-					for (var i = 0; i < ar_Sounds1.length; i++) {
-                        window["" + ar_Sounds1[i]] = new buzz.sound("media/" + ar_Sounds1[i] + "", {
-                            formats: ["mp3", "ogg", "wav"],
-                            preload: true,
-                            autoplay: false,
-                            loop: false							
-                        });						
-                    }
+	
 					window["anim1"].bind("loadeddata", function () {						
 						alert("anim1");
 						realInit();											
@@ -4791,7 +4783,7 @@
                         buzz.all().stop();
                         window["ques" + scene].play();
 					}catch(e){
-					
+						alert("error " + e);
 					}
 							 playClickAnimAfter(1);
 							 playClickAnimAfter(2);
