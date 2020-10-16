@@ -4592,8 +4592,8 @@
                     [0, 6.16, 10.62, 12.56]
                 ]
 				
-				controlAnimIntro =  [15000, 19000, 23000];
-				controlAnimHelp =  [15000, 19000, 23000];
+				controlAnimIntro =  [16000, 20000, 24000];
+				controlAnimHelp =  [15000, 20000, 24000];
 				
 				controlAnimTimes = [
                     [0, 0, 0, 0],
@@ -4669,13 +4669,21 @@
 
                 function init() {
 
+					if (!buzz.isSupported()) {
+						alert("Your browser is too old, ausio is not supported!");
+					}
+					if (!buzz.isMP3Supported()) {
+						alert("Your browser doesn't support MP3 Format.");
+					}
+
                     for (var i = 0; i < ar_Sounds1.length; i++) {
                         window["" + ar_Sounds1[i]] = new buzz.sound("media/" + ar_Sounds1[i] + "", {
                             formats: ["mp3", "ogg", "wav"],
                             preload: true,
                             autoplay: false,
-                            loop: false
-                        });
+                            loop: false,
+							webAudioApi:true
+                        });						
                     }
 					
                     ar_Sounds = ["BG", "title"];
@@ -5136,6 +5144,7 @@
 						try{
 							buzz.all().stop();
 							window["click"].play();
+							window["click"].unloop();
 						}catch(e){
 						}
 												
