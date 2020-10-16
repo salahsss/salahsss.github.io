@@ -4676,28 +4676,30 @@
 						alert("Your browser doesn't support MP3 Format.");
 					}
 
-                    for (var i = 0; i < ar_Sounds1.length; i++) {
-                        window["" + ar_Sounds1[i]] = new buzz.sound("media/" + ar_Sounds1[i] + "", {
-                            formats: ["mp3", "ogg", "wav"],
-                            preload: true,
-                            autoplay: false,
-                            loop: false
-                        });						
-                    }
+					try{
+						for (var i = 0; i < ar_Sounds1.length; i++) {
+							window["" + ar_Sounds1[i]] = new buzz.sound("media/" + ar_Sounds1[i] + "", {
+								formats: ["mp3", "ogg", "wav"],
+								preload: true,
+								autoplay: false,
+								loop: false
+							});						
+						}
+						
+						window["anim1"].bind("loadeddata", function () {						
+							alert("anim1");
+							realInit();											
+						});
 					
-	
-					window["anim1"].bind("loadeddata", function () {						
-						alert("anim1");
-						realInit();											
-					});
-					
+					}catch(e){
+						realInit();	
+					}
+                    
                     ar_Sounds = ["BG", "title"];
                     Audios(ar_Sounds);
                     sym.$("#Stage_scene1_Rect").css({
                         "display": "none"
-                    });
-                    
-		
+                    });                    	
                 }
 				
 				
