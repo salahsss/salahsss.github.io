@@ -4591,6 +4591,20 @@
                     [0, 5.81, 8.34, 11.09],
                     [0, 6.16, 10.62, 12.56]
                 ]
+				
+				controlAnimIntro =  [15000, 17500, 19200];
+				controlAnimTimes = [
+                    [0, 0, 0, 0],
+                    [0, 2700, 5000, 7500],
+                    [0, 5300, 8300, 10300],
+					[0, 4500, 7000, 9100],
+					[0, 5000, 7500, 9100],
+					[0, 5700, 8000, 9900],
+					[0, 5700, 8500, 10100]
+                ]
+				
+				
+				
                 firsetTime = false;
                 $.isiPad = function() {
                     return (navigator.platform.indexOf("iPad") != -1);
@@ -4711,9 +4725,14 @@
                         });
                     }
                     $("#Stage_start_start3").bind('click touchend', function() {
+					    alert("Stage_start_start3: ");
+
                         try {
                             parent.t1(game_number, 0, 0, 0, 2);
-                        } catch (err) {};
+                        } catch (err) {
+							
+							alert("catch: "+err);
+						};
                         if (audioOn1 == false) {
                             audioOn1 = true;
                             window["title"].play();
@@ -4724,20 +4743,15 @@
                             setTimeout(function() {
                                 audioOn1 = false;
                             }, 500)
-                            timeout1 = 0;
-                            seconds = 0
-                            timeout1 = setInterval(function() {
-                                seconds = window["title"].getTime();
-                                if (seconds >= 1.74) {
-                                    sym.getSymbol("#Stage_sym_intro").play("lblStart");
-                                    try {
-                                        clearInterval(timeout1);
-                                    } catch (err) {}
-                                    timeout1 = 0;
-                                }
-                            }, 1)
+
+				
+							var timeout = setTimeout(function() {														
+                                 sym.getSymbol("#Stage_sym_intro").play("lblStart");
+                            }, 2100);
                         }
                     });
+					
+					alert("finish init");
                 }
 
                 function playClick() {
@@ -4749,30 +4763,19 @@
 					}catch(e){
 						alert("catch ex " + e);
 					}
-                     /*   timeint0 = setInterval(function() {
-                            seconds = window["ques" + scene].getTime();
-                            if (seconds >= arrTime[scene][1] && seconds < arrTime[scene][2]) {
-                                sym.getSymbol("#Stage_scene1_symClick" + arrClicks[scene][1] + "_circle").play(0);
-                            } else if (seconds >= arrTime[scene][2] && seconds < arrTime[scene][3]) {
-                                sym.getSymbol("#Stage_scene1_symClick" + arrClicks[scene][2] + "_circle").play(0);
-                            } else if (seconds >= arrTime[scene][3]) {
-                                sym.getSymbol("#Stage_scene1_symClick" + arrClicks[scene][3] + "_circle").play(0);
-                            }*/
-						var circleNum = 1;
-						
-						timeint0 = setInterval(function() {
-   
-                            sym.getSymbol("#Stage_scene1_symClick" + arrClicks[scene][circleNum] + "_circle").play(0);
-							circleNum++;
+							 alert("start click anim");
 							
-							if(circleNum == 4){
-								 try {
-									clearInterval(timeint0);
-								} catch (err) {}
-							}
-                        }, 2700)
+							 playClickAnimAfter(1);
+							 playClickAnimAfter(2);
+							 playClickAnimAfter(3);
                     }, 500)
                 }
+				
+				function playClickAnimAfter(circleNum){
+					var timeout3 = setTimeout(function(){
+								sym.getSymbol("#Stage_scene1_symClick" + arrClicks[scene][circleNum] + "_circle").play(0);
+					}, controlAnimTimes[scene][circleNum]);
+				}
 
                 function stopClick() {
                     //buzz.all().stop();
@@ -4804,7 +4807,7 @@
                         "cursor": "default"
                     });
                     setTimeout(function() {
-                       // buzz.all().stop();
+                        buzz.all().stop();
                         var nn = 0;
                         if (scene < 5) {
                             nn = 1;
@@ -4814,7 +4817,22 @@
                         window["next" + nn].play();
                         timeout1 = 0;
                         seconds = 0
-                        timeout1 = setInterval(function() {
+						alert(nn);
+					 	timeout1 = setTimeout(function() {
+                             
+                                sym.$("#Stage_scene1_symNext").css({
+                                    "opacity": "1",
+                                    "cursor": "pointer"
+                                });
+                                sym.getSymbol("#Stage_scene1_symNext").play(0);
+                                sym.$("#Stage_scene1_symNext").unbind("click touchend");
+                                sym.$("#Stage_scene1_symNext").bind("click touchend", function() {
+                                    nextStep();
+                                });
+                           
+                        }, 2000)//
+						
+                      /*  timeout1 = setInterval(function() {
                             seconds = window["next" + nn].getTime();
                             if (window["next" + nn].isEnded()) {
                                 sym.$("#Stage_scene1_symNext").css({
@@ -4831,7 +4849,7 @@
                                 } catch (err) {}
                                 timeout1 = 0;
                             }
-                        }, 1)
+                        }, 1)*/
                     }, 1500)
                 }
 
@@ -4895,9 +4913,14 @@
                     sym.getSymbol("#Stage_scene1_sym_pics").stop("lbl" + (RVal + 1))
                     sym.getSymbol("#Stage_scene1_resultBoard").stop("lbl" + (RVal + 1) + "_1");
                     
-					if(!firstTime){
-						enableClick();
-					}
+					alert("finish nextStep");
+
+					//if(!firsetTime){
+					enableClick();
+					//}
+					
+					alert("finish nextStep");
+
                 }
 
                 function enableClick() {
@@ -4965,6 +4988,7 @@
                 }
 
                 function CheckAnswer() {
+					alert("check answer");
                     if (check == false) {
                         check = true;
                         if (click_id == 1) {
@@ -4997,29 +5021,86 @@
                                     window["anim5"].play();
                                 }, 500)
                             }
+							alert("before setTimeout");
                             timeout0 = 0;
                             timeout0 = setTimeout(function() {
                                 sym.$("#Stage_scene1_RightMark").css({
                                     "opacity": "0"
                                 });
                                 if (RVal != 2 && RVal != 3) {
-                                //    buzz.all().stop();
+                                    buzz.all().stop();
                                 }
                                 window["res" + RVal].play();
-                                timeout1 = setInterval(function() {
+								var timeoutActivateButton = setTimeout(function() {
+									alert("step RVal: "+RVal);
+									 if (RVal < 5){
+										
+											EnableNext();
+											sym.$("#Stage_scene1_Rect").css({
+													"display": "none"
+											});
+									 }else {
+										 alert("step else RVal: "+RVal);
+										    sym.$("#Stage_scene1_BGsound").css({
+                                                "cursor": "default"
+                                            });
+                                            sym.$("#Stage_scene1_BGsound").unbind("click touchend");
+                                            sym.stopSound("BG");
+                                            timeout0 = setTimeout(function() {
+											    alert("setTimeout1 step else RVal: "+RVal);
+                                                buzz.all().stop();
+                                                window["anim" + (RVal - 4)].play();
+                                                pos = 0;
+                                                timeout1 = 0;												
+												seconds = window["anim" + (RVal - 4)].getTime();
+                                                pos = seconds * 1000;
+                                                sym.getSymbol("#Stage_scene1_sym_txt_txt" + (RVal - 4)).stop(pos);
+												
+												timeout1 = setTimeout(function() {	
+														alert("setTimeout2 step else RVal: "+RVal);												
+                                                        if (RVal != 6) {
+                                                            EnableNext();
+                                                            sym.$("#Stage_scene1_Rect").css({
+                                                                "display": "none"
+                                                            });
+                                                            if (soundOff == false) {
+                                                                sym.playSound("BG", 0.07);
+                                                                sym.$("#Stage_scene1_BGsound").css({
+                                                                    "cursor": "pointer"
+                                                                });
+                                                                sym.$("#Stage_scene1_BGsound").bind("click touchend", soundBG);
+                                                            }
+                                                        } else {
+                                                            sym.getSymbol("#Stage_scene1_sym_pics").stop("lbl7");
+                                                            sym.getSymbol("#Stage_scene1_sym_pics_sym_pic7").play(0);
+                                                            sym.stopSound("BG");
+                                                            buzz.all().stop();
+                                                            window["anim3"].play();
+                                                            setTimeout(function() {
+                                                                endGame = true;
+                                                                resultStar();
+                                                            }, 4000);
+                                                        }
+													}, 10000);//
+											}, 1000);
+									 }											
+								},1000);//1000, 2000,3000
+								
+                              /*  timeout1 = setInterval(function() {
                                     seconds = window["res" + RVal].getTime();
                                     if (window["res" + RVal].isEnded()) {
+										alert("step" + RVal);
                                         try {
                                             clearInterval(timeout1);
                                         } catch (err) {}
                                         timeout1 = 0;
                                         if (RVal < 5) {
-                                            if (RVal != 6) {
-                                                EnableNext();
-                                                sym.$("#Stage_scene1_Rect").css({
-                                                    "display": "none"
-                                                });
-                                            }
+                                            
+                                            EnableNext();
+                                            sym.$("#Stage_scene1_Rect").css({
+                                                 "display": "none"
+                                            });
+                                            
                                         } else {
                                             sym.$("#Stage_scene1_BGsound").css({
                                                 "cursor": "default"
@@ -5034,7 +5115,7 @@
                                                 timeout1 = setInterval(function() {
                                                     seconds = window["anim" + (RVal - 4)].getTime();
                                                     pos = seconds * 1000;
-                                                    sym.getSymbol("#Stage_scene1_sym_txt_txt" + (RVal - 4)).stop(pos)
+                                                    sym.getSymbol("#Stage_scene1_sym_txt_txt" + (RVal - 4)).stop(pos);
                                                     if (window["anim" + (RVal - 4)].isEnded()) {
                                                         try {
                                                             clearInterval(timeout1);
@@ -5068,7 +5149,7 @@
                                             }, 1000)
                                         }
                                     }
-                                }, 1)
+                                }, 1)*/
                             }, 1000)
                             try {
                                 parent.parent.addKidPoints(1);
@@ -5129,29 +5210,32 @@
 						
 						alert("start media 2 ");
                         seconds = 0;
-                        timeout0 = setTimeout(function() {
-							alert("start media 3");
-                            window["info"].play();
-                            timeout1 = setInterval(function() {
-                                seconds = window["info"].getTime();
-                                if (seconds >= 15.11 && seconds < 19.49) {
-                                    sym.getSymbol("#Stage_sym_info_sound").play(0);
-                                } else if (seconds >= 19.49 && seconds < 23.92) {
-                                    sym.getSymbol("#Stage_sym_info_info").play(0);
-                                } else if (seconds >= 23.92) {
-                                    sym.getSymbol("#Stage_sym_info_home").play(0);
-                                    try {
-                                        clearInterval(timeout1);
-                                    } catch (err) {}
-                                    timeout1 = 0;
-                                }
-                            }, 1)
-                        }, 500)
+                       
+						alert("start media 3");
+                        window["info"].play();
+							
+						var timeout1 = setTimeout(function(){
+							playAnim("#Stage_sym_info_sound");
+						}, controlAnimIntro[0]);
+							
+						var timeout2 = setTimeout(function(){
+							playAnim("#Stage_sym_info_info");
+						}, controlAnimIntro[1]);
+							 
+						var timeout3 = setTimeout(function(){
+							playAnim("#Stage_sym_info_home");
+						}, controlAnimIntro[2]);
+							
+                        
                         setTimeout(function() {
                             start1 = false;
                         }, 500)
                     }
                 }
+				
+				function playAnim(animName){
+					sym.getSymbol(animName).play(0);
+				}
 
                 function resultStar() {
                     try {
@@ -5219,6 +5303,8 @@
                         try {
                             clearInterval(timeout1);
                         } catch (err) {}
+						
+						
                         if (firsetTime == false) {
                             firsetTime = true;
                             playClick()
@@ -5228,7 +5314,7 @@
                             sym.playSound("BG", 0.07);
                         }
 						try{
-						//	buzz.all().stop();
+							buzz.all().stop();
 							window["click"].play();
 						}catch(e){
 							alert("catch ex: "+e);
