@@ -5146,6 +5146,7 @@
 							window["click"].play();
 							window["click"].unloop();
 						}catch(e){
+							alert("issue");
 						}
 												
                         seconds = 0;
