@@ -4716,7 +4716,7 @@
 				
 				
 
-				alert(1);
+				alert(2);
 				
                 function init() {
 					
@@ -4735,11 +4735,7 @@
 					animLoaded = false;
 					
 					try{
-						
-
-						
 						if(iOS()){	
-
 							setTimeout(realInit, 500);								
 						}else{		
 							if(isEventSupported("loadeddata")){
@@ -4813,8 +4809,7 @@
                         });
                     }
 					
-					counterIsAudioReady = 0;
-					
+					counterIsAudioReady = 0;					
                     $("#Stage_start_start3").bind('click touchend', function() {
 																	
 						if(iOS()){
@@ -4827,14 +4822,15 @@
 										}
 
 										var loadAudioInterval = setInterval(function() {
-												alert(counterIsAudioReady + "   " + (ar_Sounds1.length - 2));
-												if(counterIsAudioReady > ar_Sounds1.length - 2){
+												//alert(counterIsAudioReady + "   " + (ar_Sounds1.length - 2));
+												if(counterIsAudioReady >= ar_Sounds1.length){
 													clearInterval(loadAudioInterval);
 													justStart();													
-												}
-											
+												}											
 										}, 750);
 										
+									}else{
+										justStart();
 									}
 									
 								}catch(e){
@@ -4861,7 +4857,7 @@
 				}
 				function ifAudioReadyCount(name){
 					window[name].bind("canplaythrough", function () {
-							counterIsAudioReady++;						
+							counterIsAudioReady++;
 							window[name].unbind("canplaythrough");							
 					});
 				}
@@ -4882,7 +4878,8 @@
 							if(isEventSupported("pause")){	
 								
 								window[name].stop();			
-								window[name].bind("pause", function () {										
+								window[name].bind("pause", function () {
+										
 										window[name].unbind("pause");										
 								});																	
 							}	
