@@ -4824,7 +4824,18 @@
 							}							
 						}	
 						else{
-							enterGame();						
+							window["BG"].mute();
+							window["info"].mute();
+							window["BG"].play();
+							window["info"].play();
+							
+							setTimeout(function() {	
+										window["BG"].stop();
+										window["info"].stop();							
+										window["BG"].unmute();
+										window["info"].unmute();
+										enterGame();
+							}, 1000);						
 						}
                     });
 				}
