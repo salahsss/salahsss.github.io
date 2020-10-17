@@ -4701,8 +4701,8 @@
 					}
 					
 					
-				beforeInit();
-				function beforeInit(){
+				
+				function initBuzzAudio(){
 					for (var i = 0; i < ar_Sounds1.length; i++) {
 						window["" + ar_Sounds1[i]] = new buzz.sound("media/" + ar_Sounds1[i] + "", {
 								formats: ["mp3", "ogg", "wav"],
@@ -4728,7 +4728,9 @@
 					if (!buzz.isMP3Supported()) {
 						alert("Your browser doesn't support MP3 Format.");
 					}
-										
+							
+					initBuzzAudio();	
+					
 					loadedCounter = 0;
 					animLoaded = false;
 					
