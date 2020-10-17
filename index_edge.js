@@ -4521,15 +4521,8 @@
     Edge.registerEventBinding(compId, function($) {
         //Edge symbol: 'stage'
         (function(symbolName) {
-            Symbol.bindElementAction(compId, symbolName, "${Stage}", "mousemove", function(sym, e) {
-                mouseX = e.pageX
-                mouseY = e.pageY
-            });
-            //Edge binding end
-            Symbol.bindElementAction(compId, symbolName, "${Stage}", "touchmove", function(sym, e) {
-                mouseX = e.pageX
-                mouseY = e.pageY
-            });
+
+			alert(1);
             //Edge binding end
             Symbol.bindElementAction(compId, symbolName, "document", "compositionReady", function(sym, e) {
                 $("#Stage").css({
@@ -4542,6 +4535,10 @@
                     "user-select": "none",
                     "cursor": "default"
                 })
+				
+				//document.ontouchmove = function(e) {e.preventDefault()};
+				
+				
                 yepnope({
                     nope: ['js/jqueryui1103custommin.js', 'js/jqueryuitouchpunchmin.js', 'js/buzz.js'],
                     complete: init
@@ -4551,6 +4548,10 @@
                         return false;
                     });
                 });
+				
+				alert(2);
+				
+				
                 RVal = 0;
                 scene = 1;
                 start1 = false;
@@ -4607,12 +4608,14 @@
 				
 				timeoutControl= [0,0,0,0];
 				
-				
+				alert(3);
 				
                 firsetTime = false;
                 $.isiPad = function() {
                     return (navigator.platform.indexOf("iPad") != -1);
                 }
+				
+				alert(4);
                 for (i = 1; i <= 7; i++) {
                     if (i <= 3) {
                         sym.getSymbol("scene1").getSymbol("symClick" + i).stop(0);
@@ -4622,6 +4625,8 @@
                     }
                     sym.getSymbol("#Stage_scene1_sym_pics_sym_pic" + i).stop(0)
                 }
+				alert(5);
+				
                 for (var i = 1; i <= 3; i++) {
                     sym.getSymbol("#Stage_scene1_symClick" + i + "_circle").stop(0)
                 }
@@ -4644,6 +4649,8 @@
                 sym.getSymbol("sym_win").getSymbol("star1").stop(0);
                 sym.getSymbol("sym_win").getSymbol("star2").stop(0);
                 sym.getSymbol("sym_win").getSymbol("star3").stop(0);
+				
+				alert(6);
                 sym.$("#Stage_scene1_RightMark").css({
                     "opacity": "0"
                 });
@@ -4665,10 +4672,15 @@
                     });
                 });
 			
+			alert(7);
                 nextStep();
 
+alert(8);
                 function init() {
 
+						alert("init");
+				//	$("#Stage").disableSelection();
+					
 					if (!buzz.isSupported()) {
 						alert("Your browser is too old, ausio is not supported!");
 					}
@@ -4687,8 +4699,9 @@
 							});						
 						}
 						
-						window["anim1"].bind("loadeddata", function () {
-							alert("Ready!");							
+						window["anim1"].bind("loadeddata", function () {													
+							
+							alert("Ready!");
 							realInit();	
 						});
 					
