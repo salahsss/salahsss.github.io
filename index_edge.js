@@ -4752,7 +4752,7 @@
                     });   
                 
                 }
-				alert(28);
+				alert(29);
 				
 				function realInit(){
 
@@ -4806,14 +4806,15 @@
 						if(iOS()){
 							if(isEventSupported("playing")){
 								try{
-									for (var i = 0; i < ar_Sounds1.length; i++) {									
+									/*for (var i = 0; i < ar_Sounds1.length; i++) {									
 										playThenStop("" + ar_Sounds1[i]);										
-									}
+									}*/
+									playThenStop("info");
 									
 									if(isEventSupported("canplaythrough")){
 										window["info"].bind("canplaythrough", function () {
+											window[name].setVolume(80);
 											window["info"].unbind("canplaythrough");
-											alert("canplaythrough");
 											enterGame();
 										});
 									}else{
