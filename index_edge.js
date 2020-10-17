@@ -4729,11 +4729,11 @@
 							realInit();								
 						}else{		
 							if(isEventSupported("loadeddata")){
-								window["anim1"].bind("loadeddata", function () {													
-									realInit();	
+								window["anim1"].bind("loadeddata", function () {
+									setTimeout(realInit, 500);											
 								});
 							}else{
-								realInit();	
+								setTimeout(realInit, 1000);								
 							}
 						}
 											
