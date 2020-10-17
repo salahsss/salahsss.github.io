@@ -4522,7 +4522,7 @@
         //Edge symbol: 'stage'
         (function(symbolName) {
 
-			alert(2);
+			
             //Edge binding end
             Symbol.bindElementAction(compId, symbolName, "document", "compositionReady", function(sym, e) {
                 $("#Stage").css({
@@ -4800,17 +4800,15 @@
                     $("#Stage_start_start3").bind('click touchend', function() {
 					  
 						if(iOS()){
-							alert("IOS");
+							
 							for (var i = 0; i < ar_Sounds1.length; i++) {
 								window["" + ar_Sounds1[i]].mute();
 								window["" + ar_Sounds1[i]].play();			
 							}
 							
 							if(isEventSupported("loadeddata")){
-								alert("isEventSupported loadeddata");
 								
-								window["anim1"].bind("loadeddata", function () {									
-									alert("anim1 loadeddata");
+								window["anim1"].bind("loadeddata", function () {																		
 									buzz.all().stop();
 									setTimeout(function() {
 										buzz.all().unmute();
