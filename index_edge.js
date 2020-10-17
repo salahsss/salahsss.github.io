@@ -4608,13 +4608,10 @@
 				
 				timeoutControl= [0,0,0,0];
 				
-				
-				
                 firsetTime = false;
                 $.isiPad = function() {
                     return (navigator.platform.indexOf("iPad") != -1);
                 }
-				
 				
                 for (i = 1; i <= 7; i++) {
                     if (i <= 3) {
@@ -4625,8 +4622,7 @@
                     }
                     sym.getSymbol("#Stage_scene1_sym_pics_sym_pic" + i).stop(0)
                 }
-				
-				
+								
                 for (var i = 1; i <= 3; i++) {
                     sym.getSymbol("#Stage_scene1_symClick" + i + "_circle").stop(0)
                 }
@@ -4648,8 +4644,7 @@
                 sym.getSymbol("#Stage_scene1_sym_pics").stop(0);
                 sym.getSymbol("sym_win").getSymbol("star1").stop(0);
                 sym.getSymbol("sym_win").getSymbol("star2").stop(0);
-                sym.getSymbol("sym_win").getSymbol("star3").stop(0);
-				
+                sym.getSymbol("sym_win").getSymbol("star3").stop(0);				
 				
                 sym.$("#Stage_scene1_RightMark").css({
                     "opacity": "0"
@@ -4671,14 +4666,12 @@
                         }
                     });
                 });
-			
-			
+						
                 nextStep();
 
-alert(8);
+				alert(8);
                 function init() {
-
-						alert("init");
+					
 				//	$("#Stage").disableSelection();
 					
 					if (!buzz.isSupported()) {
@@ -4687,13 +4680,11 @@ alert(8);
 					if (!buzz.isMP3Supported()) {
 						alert("Your browser doesn't support MP3 Format.");
 					}
-					
-					alert("init 2");
+										
 					loadedCounter = 0;
 					animLoaded = false;
+					
 					try{
-						alert("init try 3");
-						
 						for (var i = 0; i < ar_Sounds1.length; i++) {
 							window["" + ar_Sounds1[i]] = new buzz.sound("media/" + ar_Sounds1[i] + "", {
 								formats: ["mp3", "ogg", "wav"],
@@ -4701,29 +4692,27 @@ alert(8);
 								autoplay: false,
 								loop: false
 							});						
-						}
-						alert("init try 4");
-						
-						window["anim1"].bind("loadeddata", function () {													
-							
-							alert("Ready!");
+						}	
+
+						if($.isiPad()){
 							realInit();	
-						});
-					
-						alert("init try 5");
+						}	else{						
+							window["anim1"].bind("loadeddata", function () {													
+								realInit();	
+							});
+						}
+											
 					}catch(e){
-						alert("Failed To Load Audio!");
+						alert("Somethiong Went Wrong! The media may not work properly");
 						realInit();	
 					}
-					alert("init 6");
-                    
+
                     ar_Sounds = ["BG", "title"];
                     Audios(ar_Sounds);
                     sym.$("#Stage_scene1_Rect").css({
                         "display": "none"
                     });   
-
-					alert("init 7");                 	
+                	
                 }
 				
 				
