@@ -4522,7 +4522,7 @@
         //Edge symbol: 'stage'
         (function(symbolName) {
 
-			alert(1);
+			alert(2);
             //Edge binding end
             Symbol.bindElementAction(compId, symbolName, "document", "compositionReady", function(sym, e) {
                 $("#Stage").css({
