@@ -4716,7 +4716,7 @@
 				
 				
 
-				alert(31);
+				alert(1);
 				
                 function init() {
 					
@@ -4826,8 +4826,8 @@
 											ifAudioReadyCount("" + ar_Sounds1[i]);
 										}
 
-										loadAudioInterval = setInterval(function() {
-											
+										var loadAudioInterval = setInterval(function() {
+												alert(counterIsAudioReady + "   " + (ar_Sounds1.length - 2));
 												if(counterIsAudioReady > ar_Sounds1.length - 2){
 													clearInterval(loadAudioInterval);
 													justStart();													
@@ -4845,13 +4845,15 @@
 								justStart();
 							}																					
 						}	
-						else{																													
+						else{	
+							buzz.all().setVolume(80);
 							enterGame();																					
 						}
                     });
 				}
 				
 				function justStart(){	
+					alert("justStart");
 					buzz.all().setVolume(80);
 					setTimeout(function() {											
 						enterGame();
@@ -4880,8 +4882,7 @@
 							if(isEventSupported("pause")){	
 								
 								window[name].stop();			
-								window[name].bind("pause", function () {
-										window[name].setVolume(80);
+								window[name].bind("pause", function () {										
 										window[name].unbind("pause");										
 								});																	
 							}	
