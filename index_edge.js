@@ -4536,7 +4536,7 @@
                     "cursor": "default"
                 })
 				
-				//document.ontouchmove = function(e) {e.preventDefault()};
+				document.ontouchmove = function(e) {e.preventDefault()};
 				
 				
                 yepnope({
@@ -4672,7 +4672,7 @@
 				alert(8);
                 function init() {
 					
-				//	$("#Stage").disableSelection();
+					$("#Stage").disableSelection();
 					
 					if (!buzz.isSupported()) {
 						alert("Your browser is too old, ausio is not supported!");
@@ -4695,6 +4695,7 @@
 						}	
 
 						if($.isiPad()){
+								alert("ipad detected");
 							realInit();	
 						}	else{						
 							window["anim1"].bind("loadeddata", function () {													
@@ -4712,13 +4713,13 @@
                     sym.$("#Stage_scene1_Rect").css({
                         "display": "none"
                     });   
-                	
+                	alert("done init");
                 }
 				
 				
 				function realInit(){
 					
-					
+					alert("real init");
 					
 					sym.$("#Stage_sym_intro_Ply1").unbind("click touchend");
                     sym.$("#Stage_sym_intro_Ply1").bind("click touchend", startMedia);
@@ -4788,6 +4789,8 @@
                             }, 2100);
                         }
                     });
+					alert("done real init");
+					
 				}
 				
 
@@ -5165,6 +5168,8 @@
 
                 function startMedia() {
 				
+					alert("startMedia");
+					
                     if (start1 == false) {
                         start1 = true;
                         sym.stop("lbl2");
