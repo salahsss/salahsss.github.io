@@ -4716,7 +4716,7 @@
 				
 				
 
-				alert(4);
+				alert(5);
 				
                 function init() {
 					
@@ -4737,7 +4737,7 @@
 					buzz.all().mute();
 					
 					try{
-						if(iOS()){	
+						if(!iOS()){	
 							setTimeout(realInit, 500);								
 						}else{		
 							if(isEventSupported("loadeddata")){
@@ -4814,7 +4814,7 @@
 					counterIsAudioReady = 0;					
                     $("#Stage_start_start3").bind('click touchend', function() {
 																	
-						if(iOS()){
+						if(!iOS()){
 							if(isEventSupported("playing")){
 								try{
 									if(isEventSupported("canplaythrough")){	
