@@ -4669,9 +4669,30 @@
 						
                 nextStep();
 
+				isEventSupported = (function(){
+					  var TAGNAMES = {
+						'select':'input','change':'input',
+						'submit':'form','reset':'form',
+						'error':'img','load':'img','abort':'img'
+					  }
+					  function isEventSupported(eventName) {
+						var el = document.createElement(TAGNAMES[eventName] || 'div');
+						eventName = 'on' + eventName;
+						var isSupported = (eventName in el);
+						if (!isSupported) {
+						  el.setAttribute(eventName, 'return;');
+						  isSupported = typeof el[eventName] == 'function';
+						}
+						el = null;
+						return isSupported;
+					  }
+					  return isEventSupported;
+				})();
+					
+					
 				alert(8);
                 function init() {
-					
+					alert("is supported: "+isEventSupported("loadeddata"));
 					$("#Stage").disableSelection();
 					
 					if (!buzz.isSupported()) {
