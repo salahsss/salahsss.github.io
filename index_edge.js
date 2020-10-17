@@ -4752,7 +4752,7 @@
                     });   
                 
                 }
-				alert(29);
+				alert(30);
 				
 				function realInit(){
 
@@ -4813,7 +4813,7 @@
 									
 									if(isEventSupported("canplaythrough")){
 										window["info"].bind("canplaythrough", function () {
-											window[name].setVolume(80);
+											window["info"].setVolume(80);
 											window["info"].unbind("canplaythrough");
 											enterGame();
 										});
