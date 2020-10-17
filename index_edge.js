@@ -4699,6 +4699,24 @@
 					  // iPad on iOS 13 detection
 					  || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
 					}
+					
+					
+				beforeInit();
+				function beforeInit(){
+					for (var i = 0; i < ar_Sounds1.length; i++) {
+						window["" + ar_Sounds1[i]] = new buzz.sound("media/" + ar_Sounds1[i] + "", {
+								formats: ["mp3", "ogg", "wav"],
+								preload: true,
+								autoplay: false,
+								loop: false,
+								volume :0
+						});						
+					}	
+				}
+				
+				
+
+				alert(31);
 				
                 function init() {
 					
@@ -4716,15 +4734,7 @@
 					
 					try{
 						
-						for (var i = 0; i < ar_Sounds1.length; i++) {
-							window["" + ar_Sounds1[i]] = new buzz.sound("media/" + ar_Sounds1[i] + "", {
-								formats: ["mp3", "ogg", "wav"],
-								preload: true,
-								autoplay: false,
-								loop: false,
-								volume :0
-							});						
-						}	
+
 						
 						if(iOS()){	
 
@@ -4752,7 +4762,7 @@
                     });   
                 
                 }
-				alert(30);
+				
 				
 				function realInit(){
 
@@ -4801,24 +4811,28 @@
                         });
                     }
 					
+					counterIsAudioReady = 0;
+					
                     $("#Stage_start_start3").bind('click touchend', function() {
-					  					  
+																	
 						if(iOS()){
 							if(isEventSupported("playing")){
 								try{
-									/*for (var i = 0; i < ar_Sounds1.length; i++) {									
-										playThenStop("" + ar_Sounds1[i]);										
-									}*/
-									playThenStop("info");
-									
-									if(isEventSupported("canplaythrough")){
-										window["info"].bind("canplaythrough", function () {
-											window["info"].setVolume(80);
-											window["info"].unbind("canplaythrough");
-											enterGame();
-										});
-									}else{
-										justStart();
+									if(isEventSupported("canplaythrough")){	
+										for (var i = 0; i < ar_Sounds1.length; i++) {									
+											playThenStop("" + ar_Sounds1[i]);
+											ifAudioReadyCount("" + ar_Sounds1[i]);
+										}
+
+										loadAudioInterval = setInterval(function() {
+											
+												if(counterIsAudioReady > ar_Sounds1.length - 2){
+													clearInterval(loadAudioInterval);
+													justStart();													
+												}
+											
+										}, 750);
+										
 									}
 									
 								}catch(e){
@@ -4841,7 +4855,12 @@
 						enterGame();
 					}, 700);
 				}
-
+				function ifAudioReadyCount(name){
+					window[name].bind("canplaythrough", function () {
+							counterIsAudioReady++;						
+							window[name].unbind("canplaythrough");							
+					});
+				}
 				
 				function playThenStop(name){
 							if(isEventSupported("playing")){
