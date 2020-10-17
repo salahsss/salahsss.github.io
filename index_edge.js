@@ -4749,7 +4749,7 @@
                     });   
                 
                 }
-				alert(24);
+				alert(25);
 				
 				function realInit(){
 
@@ -4797,62 +4797,87 @@
                             sym.getSymbol("#Stage_sym_win_sym_replay").stop("lbl1")
                         });
                     }
+					
                     $("#Stage_start_start3").bind('click touchend', function() {
+					  
 					  
 						if(iOS()){
 							if(isEventSupported("volumechange")){
 								alert("volumechange supported");
-								for (var i = 0; i < ar_Sounds1.length; i++) {									
-									loadSoundManually("" + ar_Sounds1[i]);																								
+								try{
+									for (var i = 0; i < ar_Sounds1.length; i++) {									
+										loadSoundManually("" + ar_Sounds1[i]);																								
+									}
+								}catch(e){
+									setTimeout(function() {											
+										enterGame();
+									}, 1000);
 								}
 							}
-														
-							if(isEventSupported("canplaythrough")){		
-								alert("canplaythrough supported");							
-								window["anim1"].bind("canplaythrough", function () {
-									alert("anim1 canplaythrough");	
+							else{
+								setTimeout(function() {											
 									enterGame();
-								});
-							}else{
-								buzz.all().stop();
-								setTimeout(function() {									    
-										buzz.all().unmute();
-										enterGame();
-								}, 1000);	
-							}							
+								}, 1000);
+							}																					
 						}	
 						else{																				
-							if(isEventSupported("volumechange")){	
-									//alert("volumechange supported" );
-									
-									loadSoundManuallyThenStart("info");																	
-							}else{							
-									setTimeout(function() {											
-											enterGame();
-									}, 1000);				
-							}																										
+							/*if(isEventSupported("volumechange")){
+								loadSoundManuallyThenStart("info");
+							}
+							else{*/
+								setTimeout(function() {											
+									enterGame();
+								}, 500);	
+							//}							
+																																	
 						}
                     });
 				}
+				isAudioLoadStart = false;
 				
-				function loadSoundIsDone(){					
-					enterGame();
+				function loadSoundIsDone(){	
+					if(isAudioLoadStart == false){
+						
+							isAudioLoadStart = true;
+							alert("loadSoundIsDone");
+							enterGame();
+					}
 				}
 				
-				function loadSoundManuallyThenStart(name){					
-					muteThenPlay(name,true);
+				function loadSoundIsDoneIOS(){	
+						if(isAudioLoadStart == false){
+							isAudioLoadStart = true;
+							
+							if(isEventSupported("canplaythrough")){		
+								alert("canplaythrough supported");							
+								window["info"].bind("canplaythrough", function () {
+									alert("info canplaythrough");	
+									setTimeout(enterGame,500);
+								});
+							}else{
+								buzz.all().stop();
+									setTimeout(function() {									    
+										buzz.all().unmute();
+										enterGame();
+								}, 1000);	
+							}
+						}
+					
+				}
+				
+				function loadSoundManuallyThenStart(name){			
+							muteThenPlay(name,true);										
 				}
 				
 				function loadSoundManually(name){					
-					muteThenPlay(name,false);
+							muteThenPlay(name,false);						
 				}
 				
 				function muteThenPlay(name,startAfter){
 							if(isEventSupported("volumechange")){							
-								//alert("mute");
+								
 								window[name].mute();			
-								window[name].bind("volumechange", function () {
-										
+								window[name].bind("volumechange", function () {										
 										playThenStop(name,startAfter);
 								});																	
 							}	
@@ -4860,8 +4885,7 @@
 				
 				function playThenStop(name,startAfter){
 							if(isEventSupported("playing")){
-								
-								//alert("play");
+
 								window[name].play();			
 								window[name].bind("playing", function () {
 										stopThenUnmute(name,startAfter);
@@ -4872,18 +4896,22 @@
 				
 				function stopThenUnmute(name,startAfter){
 							if(isEventSupported("pause")){								
-								//alert("stop");
+							
 								window[name].stop();			
 								window[name].bind("pause", function () {
 										window[name].unmute();
 										if(startAfter){
 											setTimeout(loadSoundIsDone,500);
+										}else{
+											setTimeout(loadSoundIsDoneIOS,500);
 										}
 								});																	
 							}	
 				}
 				
 				function enterGame(){
+					
+					window["info"].unmute();
 						try {
                             parent.t1(game_number, 0, 0, 0, 2);
                         } catch (err) {
