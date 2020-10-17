@@ -4721,16 +4721,18 @@
 								formats: ["mp3", "ogg", "wav"],
 								preload: true,
 								autoplay: false,
-								loop: false
+								loop: false,
+								volume :0
 							});						
 						}	
 						
-						if(iOS()){							
-							realInit();								
+						if(iOS()){	
+
+							setTimeout(realInit, 500);								
 						}else{		
 							if(isEventSupported("loadeddata")){
 								window["anim1"].bind("loadeddata", function () {
-									realInit();											
+									setTimeout(realInit, 500);										
 								});
 							}else{
 								setTimeout(realInit, 500);								
@@ -4749,7 +4751,7 @@
                     });   
                 
                 }
-				alert(25);
+				alert(26);
 				
 				function realInit(){
 
@@ -4799,119 +4801,70 @@
                     }
 					
                     $("#Stage_start_start3").bind('click touchend', function() {
-					  
-					  
+					  					  
 						if(iOS()){
-							if(isEventSupported("volumechange")){
-								alert("volumechange supported");
+							if(isEventSupported("playing")){
 								try{
 									for (var i = 0; i < ar_Sounds1.length; i++) {									
-										loadSoundManually("" + ar_Sounds1[i]);																								
+										playThenStop("" + ar_Sounds1[i]);										
 									}
+									
+									if(isEventSupported("canplaythrough")){
+										window["info"].bind("canplaythrough", function () {
+											window["info"].unbind("canplaythrough");
+											enterGame();
+										});
+									}else{
+										justStart();
+									}
+									
 								}catch(e){
-									setTimeout(function() {											
-										enterGame();
-									}, 1000);
+									justStart();
 								}
 							}
-							else{
-								setTimeout(function() {											
-									enterGame();
-								}, 1000);
+							else{								
+								justStart();
 							}																					
 						}	
-						else{																				
-							/*if(isEventSupported("volumechange")){
-								loadSoundManuallyThenStart("info");
-							}
-							else{*/
-								setTimeout(function() {											
-									enterGame();
-								}, 500);	
-							//}							
-																																	
+						else{																													
+							enterGame();																					
 						}
                     });
 				}
-				isAudioLoadStart = false;
 				
-				function loadSoundIsDone(){	
-					if(isAudioLoadStart == false){
-						
-							isAudioLoadStart = true;
-							alert("loadSoundIsDone");
-							enterGame();
-					}
+				function justStart(){	
+					buzz.all().setVolume(80);
+					setTimeout(function() {											
+						enterGame();
+					}, 500);
 				}
-				
-				function loadSoundIsDoneIOS(){	
-						if(isAudioLoadStart == false){
-							isAudioLoadStart = true;
-							
-							if(isEventSupported("canplaythrough")){		
-								alert("canplaythrough supported");							
-								window["info"].bind("canplaythrough", function () {
-									alert("info canplaythrough");	
-									setTimeout(enterGame,500);
-								});
-							}else{
-								buzz.all().stop();
-									setTimeout(function() {									    
-										buzz.all().unmute();
-										enterGame();
-								}, 1000);	
-							}
-						}
-					
-				}
-				
-				function loadSoundManuallyThenStart(name){			
-							muteThenPlay(name,true);										
-				}
-				
-				function loadSoundManually(name){					
-							muteThenPlay(name,false);						
-				}
-				
-				function muteThenPlay(name,startAfter){
-							if(isEventSupported("volumechange")){							
-								
-								window[name].mute();			
-								window[name].bind("volumechange", function () {										
-										playThenStop(name,startAfter);
-								});																	
-							}	
-				}
-				
-				function playThenStop(name,startAfter){
-							if(isEventSupported("playing")){
 
+				
+				function playThenStop(name){
+							if(isEventSupported("playing")){
+								alert("playThenStop");
 								window[name].play();			
 								window[name].bind("playing", function () {
-										stopThenUnmute(name,startAfter);
+										window[name].unbind("playing");
+										stopThenUnmute(name);
 								});																	
 							}
 					
 				}
 				
-				function stopThenUnmute(name,startAfter){
-							if(isEventSupported("pause")){								
-							
+				function stopThenUnmute(name){
+							if(isEventSupported("pause")){	
+								alert("stopThenUnmute");
 								window[name].stop();			
 								window[name].bind("pause", function () {
-										window[name].unmute();
-										if(startAfter){
-											setTimeout(loadSoundIsDone,500);
-										}else{
-											setTimeout(loadSoundIsDoneIOS,500);
-										}
+										window[name].setVolume(80);
+										window[name].unbind("pause");										
 								});																	
 							}	
 				}
 				
 				function enterGame(){
 					
-					window["info"].unmute();
 						try {
                             parent.t1(game_number, 0, 0, 0, 2);
                         } catch (err) {
@@ -5316,16 +5269,18 @@
                         sym.getSymbol("sym_info").play(0);
 						
 						try{
-							buzz.all().stop();
-							window["click"].play();
-							window["click"].unloop();
+							//buzz.all().stop();
+							window["click"].play();							
 						}catch(e){
 							//alert("issue");
 						}
 												
                         seconds = 0;
-                       
-                        window["info"].play();							
+						
+                        window["info"].unmute();
+						window["info"].setVolume(80);
+                        window["info"].play();	
+						
 						timeoutControl[0] = setTimeout(function(){
 							playAnim("#Stage_sym_info_sound");
 						}, controlAnimIntro[0]);
