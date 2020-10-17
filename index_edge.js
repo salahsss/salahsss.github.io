@@ -4604,6 +4604,14 @@
 					[0, 5700, 9500, 11200]
                 ];
 				
+				preloadAudio = [
+					["title", "anim3", "anim4", "anim5", "ques1", "ques2","next1", "next2", "WrongAnswer", "click", "info", "CorrectAnswer", "res1"],
+					["ques3","res2","res3"],
+					["anim1","ques4","res4","res5"],
+					["ques5","ques6","anim2","res6"],
+					["result1", "result2", "result3"]
+				];
+							
 				timeoutControl= [0,0,0,0];
 				
                 firsetTime = false;
@@ -4716,10 +4724,10 @@
 				
 				
 
-				alert(6);
-				
+				alert(8);
+				IS_IOS = false;
                 function init() {
-					
+					IS_IOS = iOS();
 					//$("#Stage").disableSelection();
 					
 					if (!buzz.isSupported()) {
@@ -4737,7 +4745,7 @@
 					buzz.all().mute();
 					
 					try{
-						if(!iOS()){	
+						if(!IS_IOS){	
 							setTimeout(realInit, 500);								
 						}else{		
 							if(isEventSupported("loadeddata")){
@@ -4762,6 +4770,7 @@
                     });   
                 
                 }
+				
 				
 				
 				function realInit(){
@@ -4814,22 +4823,21 @@
 					counterIsAudioReady = 0;					
                     $("#Stage_start_start3").bind('click touchend', function() {
 																	
-						if(!iOS()){
+						if(!IS_IOS){
 							if(isEventSupported("playing")){
 								try{
 									if(isEventSupported("canplaythrough")){	
-										for (var i = 0; i < ar_Sounds1.length; i++) {									
-											playThenStop("" + ar_Sounds1[i]);
-											ifAudioReadyCount("" + ar_Sounds1[i]);
+										for (var i = 0; i < preloadAudio[0].length; i++) {									
+											playThenStop("" + preloadAudio[0][i]);
+											ifAudioReadyCount("" + preloadAudio[0][i]);
 										}
 
-										var loadAudioInterval = setInterval(function() {
-												//alert(counterIsAudioReady + "   " + (ar_Sounds1.length - 2));
-												if(counterIsAudioReady >= ar_Sounds1.length-1){
+										var loadAudioInterval = setInterval(function() {											
+												if(counterIsAudioReady >= preloadAudio[0].length-1){
 													clearInterval(loadAudioInterval);
 													justStart();													
 												}											
-										}, 750);
+										}, 500);
 										
 									}else{
 										justStart();
@@ -4843,16 +4851,16 @@
 								justStart();
 							}																					
 						}	
-						else{	
-							buzz.all().setVolume(80);
+						else{
+							buzz.all().unmute();
+							buzz.all().setVolume(80);							
 							enterGame();																					
 						}
                     });
 				}
 				startGameTimeout = 0;
 				function justStart(){	
-					
-					
+										
 					if(startGameTimeout != 0){
 						clearTimeout(startGameTimeout);
 					}
@@ -4862,19 +4870,18 @@
 					startGameTimeout = setTimeout(function() {
 						
 						enterGame();
-					}, 700);
+					}, 600);
 				}
 				function ifAudioReadyCount(name){
 					window[name].bind("canplaythrough", function () {
 							counterIsAudioReady++;
+							window[name].unmute();
 							window[name].unbind("canplaythrough");							
 					});
 				}
 				
 				function playThenStop(name){
-							if(name=="ques2"){
-								alert("playThenStop ques2");
-							}
+														
 							if(isEventSupported("playing")){
 								
 								window[name].play();			
@@ -5129,13 +5136,29 @@
                 }
 
                 function CheckAnswer() {
-					
+
 					try{
 						clearTimeout(timeoutControl[0]);
 						clearTimeout(timeoutControl[1]);
 						clearTimeout(timeoutControl[2]);
 					}catch(e){						
 					}
+					
+					
+					if(!IS_IOS && (RVal+1) < preloadAudio.length){
+						
+						for (var i = 0; i < preloadAudio[RVal+1].length; i++) {
+							window[preloadAudio[RVal+1][i]].mute();
+							try{
+								playThenStop("" + preloadAudio[RVal+1][i]);
+								ifAudioReadyCount("" + preloadAudio[RVal+1][i]);
+							}catch(e){
+								window[preloadAudio[RVal+1][i]].unmute();
+							}
+						}																						
+					}
+					
+					
 					
                     if (check == false) {
                         check = true;
