@@ -4731,8 +4731,9 @@
 							setTimeout(realInit, 500);								
 						}else{		
 							if(isEventSupported("loadeddata")){
-								window["anim1"].bind("loadeddata", function () {
-									setTimeout(realInit, 500);										
+								window["info"].bind("loadeddata", function () {									
+									setTimeout(realInit, 500);
+									window["info"].unbind("loadeddata");									
 								});
 							}else{
 								setTimeout(realInit, 500);								
@@ -4836,7 +4837,7 @@
 					buzz.all().setVolume(80);
 					setTimeout(function() {											
 						enterGame();
-					}, 500);
+					}, 700);
 				}
 
 				
@@ -5277,8 +5278,6 @@
 												
                         seconds = 0;
 						
-                        window["info"].unmute();
-						window["info"].setVolume(80);
                         window["info"].play();	
 						
 						timeoutControl[0] = setTimeout(function(){
