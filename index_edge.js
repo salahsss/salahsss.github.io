@@ -4716,7 +4716,7 @@
 				
 				
 
-				alert(5);
+				alert(6);
 				
                 function init() {
 					
@@ -4852,11 +4852,15 @@
 				startGameTimeout = 0;
 				function justStart(){	
 					
-					buzz.all().setVolume(80);
+					
 					if(startGameTimeout != 0){
 						clearTimeout(startGameTimeout);
 					}
-					startGameTimeout = setTimeout(function() {											
+					buzz.all().unmute();
+					buzz.all().setVolume(80);
+					
+					startGameTimeout = setTimeout(function() {
+						
 						enterGame();
 					}, 700);
 				}
