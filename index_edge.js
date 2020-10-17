@@ -4689,10 +4689,25 @@
 					  return isEventSupported;
 				})();
 					
+				function isIpad() {
+						const ua = window.navigator.userAgent;
+						if (ua.indexOf('iPad') > -1) {
+							return true;
+						}
+
+						if (ua.indexOf('Macintosh') > -1) {
+							try {
+								document.createEvent("TouchEvent");
+								return true;
+							} catch (e) {}
+						}
+
+						return false;
+				}
 					
 				alert(8);
                 function init() {
-					alert("is supported: "+isEventSupported("loadeddata"));
+					alert("is loadeddata supported: "+isEventSupported("loadeddata"));
 					$("#Stage").disableSelection();
 					
 					if (!buzz.isSupported()) {
@@ -4706,6 +4721,7 @@
 					animLoaded = false;
 					
 					try{
+						alert("try");
 						for (var i = 0; i < ar_Sounds1.length; i++) {
 							window["" + ar_Sounds1[i]] = new buzz.sound("media/" + ar_Sounds1[i] + "", {
 								formats: ["mp3", "ogg", "wav"],
@@ -4714,9 +4730,9 @@
 								loop: false
 							});						
 						}	
-
-						if($.isiPad()){
-								alert("ipad detected");
+						alert("is ipad:"+isIpad());
+						if(isIpad()){
+							alert("ipad detected");
 							realInit();	
 						}	else{						
 							window["anim1"].bind("loadeddata", function () {													
