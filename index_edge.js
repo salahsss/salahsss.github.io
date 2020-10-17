@@ -4694,10 +4694,13 @@
 						}
 						
 						window["anim1"].bind("loadeddata", function () {													
+							
+							alert("Ready!");
 							realInit();	
 						});
 					
 					}catch(e){
+						alert("Error happened!");
 						realInit();	
 					}
                     
