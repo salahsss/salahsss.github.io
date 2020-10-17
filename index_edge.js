@@ -4689,21 +4689,18 @@
 					  return isEventSupported;
 				})();
 					
-				function isIpad() {
-						const ua = window.navigator.userAgent;
-						if (ua.indexOf('iPad') > -1) {
-							return true;
-						}
-
-						if (ua.indexOf('Macintosh') > -1) {
-							try {
-								document.createEvent("TouchEvent");
-								return true;
-							} catch (e) {}
-						}
-
-						return false;
-				}
+				function iOS() {
+					  return [
+						'iPad Simulator',
+						'iPhone Simulator',
+						'iPod Simulator',
+						'iPad',
+						'iPhone',
+						'iPod'
+					  ].includes(navigator.platform)
+					  // iPad on iOS 13 detection
+					  || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+					}
 					
 				alert(8);
                 function init() {
@@ -4730,9 +4727,9 @@
 								loop: false
 							});						
 						}	
-						alert("is ipad:"+isIpad());
-						if(isIpad()){
-							alert("ipad detected");
+						alert("is iOS:"+iOS());
+						if(iOS()){
+							alert("iOS detected");
 							realInit();	
 						}	else{						
 							window["anim1"].bind("loadeddata", function () {													
