@@ -4536,7 +4536,7 @@
                     "cursor": "default"
                 })
 				
-				document.ontouchmove = function(e) {e.preventDefault()};
+				//document.ontouchmove = function(e) {e.preventDefault()};
 				
 				
                 yepnope({
@@ -4549,9 +4549,7 @@
                     });
                 });
 				
-				
-				
-				
+
                 RVal = 0;
                 scene = 1;
                 start1 = false;
@@ -4701,14 +4699,13 @@
 					  // iPad on iOS 13 detection
 					  || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
 					}
-					
-				alert(8);
+				
                 function init() {
-					alert("is loadeddata supported: "+isEventSupported("loadeddata"));
-					$("#Stage").disableSelection();
+					
+					//$("#Stage").disableSelection();
 					
 					if (!buzz.isSupported()) {
-						alert("Your browser is too old, ausio is not supported!");
+						alert("Your browser is too old, audio is not supported!");
 					}
 					if (!buzz.isMP3Supported()) {
 						alert("Your browser doesn't support MP3 Format.");
@@ -4718,23 +4715,27 @@
 					animLoaded = false;
 					
 					try{
-						alert("try");
+						
 						for (var i = 0; i < ar_Sounds1.length; i++) {
 							window["" + ar_Sounds1[i]] = new buzz.sound("media/" + ar_Sounds1[i] + "", {
 								formats: ["mp3", "ogg", "wav"],
 								preload: true,
 								autoplay: false,
-								loop: false
+								loop: false,
+								volume :0
 							});						
 						}	
-						alert("is iOS:"+iOS());
-						if(iOS()){
-							alert("iOS detected");
-							realInit();	
-						}	else{						
-							window["anim1"].bind("loadeddata", function () {													
+						
+						if(iOS()){							
+							realInit();								
+						}else{		
+							if(isEventSupported("loadeddata")){
+								window["anim1"].bind("loadeddata", function () {													
+									realInit();	
+								});
+							}else{
 								realInit();	
-							});
+							}
 						}
 											
 					}catch(e){
@@ -4747,14 +4748,12 @@
                     sym.$("#Stage_scene1_Rect").css({
                         "display": "none"
                     });   
-                	alert("done init");
+                
                 }
 				
 				
 				function realInit(){
-					
-					alert("real init");
-					
+
 					sym.$("#Stage_sym_intro_Ply1").unbind("click touchend");
                     sym.$("#Stage_sym_intro_Ply1").bind("click touchend", startMedia);
                     sym.$("#Stage_scene1_sym_home").unbind("click touchend");
@@ -4801,11 +4800,46 @@
                     }
                     $("#Stage_start_start3").bind('click touchend', function() {
 					  
-                        try {
+						if(iOS()){
+							alert("IOS");
+							for (var i = 0; i < ar_Sounds1.length; i++) {
+								window["" + ar_Sounds1[i]].play();			
+							}
+							
+							if(isEventSupported("loadeddata")){
+								alert("isEventSupported loadeddata");
+								
+								window["anim1"].bind("loadeddata", function () {
+									
+									alert("anim1 loadeddata");
+
+									buzz.all().stop();
+									setTimeout(function() {
+										buzz.all().setVolume(80);
+										enterGame();
+									}, 500);
+									
+									
+								});
+							}else{
+								buzz.all().stop();
+								setTimeout(function() {									    
+										buzz.all().setVolume(80);
+										enterGame();
+								}, 1000);	
+							}							
+						}	
+						else{
+							enterGame();						
+						}
+                    });
+				}
+				function enterGame(){
+						try {
                             parent.t1(game_number, 0, 0, 0, 2);
                         } catch (err) {
 				
-						};
+						}
                         if (audioOn1 == false) {
                             audioOn1 = true;
                             window["title"].play();
@@ -4822,11 +4856,7 @@
                                  sym.getSymbol("#Stage_sym_intro").play("lblStart");
                             }, 2100);
                         }
-                    });
-					alert("done real init");
-					
 				}
-				
 
                 function playClick() {
                     seconds = 0;
@@ -5202,7 +5232,6 @@
 
                 function startMedia() {
 				
-					alert("startMedia");
 					
                     if (start1 == false) {
                         start1 = true;
