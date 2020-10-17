@@ -4542,10 +4542,6 @@
                     "user-select": "none",
                     "cursor": "default"
                 })
-				
-				document.ontouchmove = function(e) {e.preventDefault()};
-				
-				
                 yepnope({
                     nope: ['js/jqueryui1103custommin.js', 'js/jqueryuitouchpunchmin.js', 'js/buzz.js'],
                     complete: init
@@ -4673,8 +4669,6 @@
 
                 function init() {
 
-					$("#Stage").disableSelection();
-					
 					if (!buzz.isSupported()) {
 						alert("Your browser is too old, ausio is not supported!");
 					}
@@ -4693,14 +4687,13 @@
 							});						
 						}
 						
-						window["anim1"].bind("loadeddata", function () {													
-							
-							alert("Ready!");
+						window["anim1"].bind("loadeddata", function () {
+							alert("Ready!");							
 							realInit();	
 						});
 					
 					}catch(e){
-						alert("Error happened!");
+						alert("Failed To Load Audio!");
 						realInit();	
 					}
                     
