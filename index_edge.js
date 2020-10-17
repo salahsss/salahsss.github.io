@@ -4542,6 +4542,10 @@
                     "user-select": "none",
                     "cursor": "default"
                 })
+				
+				document.ontouchmove = function(e) {e.preventDefault()};
+				
+				
                 yepnope({
                     nope: ['js/jqueryui1103custommin.js', 'js/jqueryuitouchpunchmin.js', 'js/buzz.js'],
                     complete: init
@@ -4669,13 +4673,16 @@
 
                 function init() {
 
+					$("#Stage").disableSelection();
+					
 					if (!buzz.isSupported()) {
 						alert("Your browser is too old, ausio is not supported!");
 					}
 					if (!buzz.isMP3Supported()) {
 						alert("Your browser doesn't support MP3 Format.");
 					}
-
+					loadedCounter = 0;
+					animLoaded = false;
 					try{
 						for (var i = 0; i < ar_Sounds1.length; i++) {
 							window["" + ar_Sounds1[i]] = new buzz.sound("media/" + ar_Sounds1[i] + "", {
@@ -4687,7 +4694,7 @@
 						}
 						
 						window["anim1"].bind("loadeddata", function () {													
-							realInit();											
+							realInit();	
 						});
 					
 					}catch(e){
