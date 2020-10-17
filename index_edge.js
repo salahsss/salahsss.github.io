@@ -4749,7 +4749,7 @@
                     });   
                 
                 }
-				
+				alert(22);
 				
 				function realInit(){
 
@@ -4823,16 +4823,12 @@
 								}, 1000);	
 							}							
 						}	
-						else{
-							window["BG"].mute();
-							window["info"].mute();
-							window["BG"].play();
+						else{							
+							window["info"].mute();							
 							window["info"].play();
 							
-							setTimeout(function() {	
-										window["BG"].stop();
-										window["info"].stop();							
-										window["BG"].unmute();
+							setTimeout(function() {											
+										window["info"].stop();																	
 										window["info"].unmute();
 										enterGame();
 							}, 1000);						
