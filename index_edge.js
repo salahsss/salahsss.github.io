@@ -4724,7 +4724,7 @@
 				
 				
 
-				alert(8);
+				//alert(8);
 				IS_IOS = false;
                 function init() {
 					IS_IOS = iOS();
@@ -4745,7 +4745,7 @@
 					buzz.all().mute();
 					
 					try{
-						if(!IS_IOS){	
+						if(IS_IOS){	
 							setTimeout(realInit, 500);								
 						}else{		
 							if(isEventSupported("loadeddata")){
@@ -4823,7 +4823,7 @@
 					counterIsAudioReady = 0;					
                     $("#Stage_start_start3").bind('click touchend', function() {
 																	
-						if(!IS_IOS){
+						if(IS_IOS){
 							if(isEventSupported("playing")){
 								try{
 									if(isEventSupported("canplaythrough")){	
@@ -4875,7 +4875,7 @@
 				function ifAudioReadyCount(name){
 					window[name].bind("canplaythrough", function () {
 							counterIsAudioReady++;
-							window[name].unmute();
+							
 							window[name].unbind("canplaythrough");							
 					});
 				}
@@ -4898,7 +4898,7 @@
 								
 								window[name].stop();			
 								window[name].bind("pause", function () {
-										
+										window[name].unmute();
 										window[name].unbind("pause");										
 								});																	
 							}	
@@ -5145,7 +5145,7 @@
 					}
 					
 					
-					if(!IS_IOS && (RVal+1) < preloadAudio.length){
+					if(IS_IOS && (RVal+1) < preloadAudio.length){
 						
 						for (var i = 0; i < preloadAudio[RVal+1].length; i++) {
 							window[preloadAudio[RVal+1][i]].mute();
