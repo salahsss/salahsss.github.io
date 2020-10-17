@@ -4752,7 +4752,7 @@
                     });   
                 
                 }
-				alert(27);
+				alert(28);
 				
 				function realInit(){
 
@@ -4813,6 +4813,7 @@
 									if(isEventSupported("canplaythrough")){
 										window["info"].bind("canplaythrough", function () {
 											window["info"].unbind("canplaythrough");
+											alert("canplaythrough");
 											enterGame();
 										});
 									}else{
@@ -4843,7 +4844,7 @@
 				
 				function playThenStop(name){
 							if(isEventSupported("playing")){
-								alert("playThenStop");
+								
 								window[name].play();			
 								window[name].bind("playing", function () {
 										window[name].unbind("playing");
@@ -4855,7 +4856,7 @@
 				
 				function stopThenUnmute(name){
 							if(isEventSupported("pause")){	
-								alert("stopThenUnmute");
+								
 								window[name].stop();			
 								window[name].bind("pause", function () {
 										window[name].setVolume(80);
@@ -4863,6 +4864,7 @@
 								});																	
 							}	
 				}
+				
 				
 				function enterGame(){
 					
