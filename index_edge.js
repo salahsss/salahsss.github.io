@@ -4721,8 +4721,7 @@
 								formats: ["mp3", "ogg", "wav"],
 								preload: true,
 								autoplay: false,
-								loop: false,
-								volume :0
+								loop: false
 							});						
 						}	
 						
@@ -4803,28 +4802,25 @@
 						if(iOS()){
 							alert("IOS");
 							for (var i = 0; i < ar_Sounds1.length; i++) {
+								window["" + ar_Sounds1[i]].mute();
 								window["" + ar_Sounds1[i]].play();			
 							}
 							
 							if(isEventSupported("loadeddata")){
 								alert("isEventSupported loadeddata");
 								
-								window["anim1"].bind("loadeddata", function () {
-									
+								window["anim1"].bind("loadeddata", function () {									
 									alert("anim1 loadeddata");
-
 									buzz.all().stop();
 									setTimeout(function() {
-										buzz.all().setVolume(80);
+										buzz.all().unmute();
 										enterGame();
 									}, 500);
-									
-									
 								});
 							}else{
 								buzz.all().stop();
 								setTimeout(function() {									    
-										buzz.all().setVolume(80);
+										buzz.all().unmute();
 										enterGame();
 								}, 1000);	
 							}							
