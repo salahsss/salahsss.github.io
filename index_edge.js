@@ -4716,7 +4716,7 @@
 				
 				
 
-				//alert(3);
+				alert(4);
 				
                 function init() {
 					
@@ -4733,6 +4733,8 @@
 					
 					loadedCounter = 0;
 					animLoaded = false;
+					
+					buzz.all().mute();
 					
 					try{
 						if(iOS()){	
@@ -4866,6 +4868,9 @@
 				}
 				
 				function playThenStop(name){
+							if(name=="ques2"){
+								alert("playThenStop ques2");
+							}
 							if(isEventSupported("playing")){
 								
 								window[name].play();			
