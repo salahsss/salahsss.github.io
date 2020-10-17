@@ -4714,10 +4714,11 @@
 					for (var i = 0; i < ar_Sounds1.length; i++) {
 						window["" + ar_Sounds1[i]] = new buzz.sound("media/" + ar_Sounds1[i] + "", {
 								formats: ["mp3", "ogg", "wav"],
+								volume :0,
 								preload: true,
 								autoplay: false,
-								loop: false,
-								volume :0
+								loop: false
+								
 						});						
 					}	
 				}
@@ -4873,11 +4874,14 @@
 					}, 600);
 				}
 				function ifAudioReadyCount(name){
-					window[name].bind("canplaythrough", function () {
-							counterIsAudioReady++;
-							
-							window[name].unbind("canplaythrough");							
-					});
+					if(isEventSupported("canplaythrough")){
+						window[name].bind("canplaythrough", function () {
+								counterIsAudioReady++;							
+								window[name].unbind("canplaythrough");							
+						});
+					}else{
+						counterIsAudioReady++;
+					}
 				}
 				
 				function playThenStop(name){
@@ -4889,6 +4893,8 @@
 										window[name].unbind("playing");
 										stopThenUnmute(name);
 								});																	
+							}else{
+								stopThenUnmute(name);
 							}
 					
 				}
@@ -4901,7 +4907,9 @@
 										window[name].unmute();
 										window[name].unbind("pause");										
 								});																	
-							}	
+							}else{
+								window[name].unmute();
+							}								
 				}
 				
 				
