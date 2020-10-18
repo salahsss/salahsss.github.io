@@ -4737,6 +4737,8 @@
 				alert(4);						
 				IS_IOS = false;
 				IS_MOB = false;
+				previousAudio = null;
+				
                 function init() {
 					IS_IOS = iOS();
 					IS_MOB = isMobile();
@@ -4875,7 +4877,7 @@
                         if (audioOn1 == false) {
                             audioOn1 = true;							
 							try{
-								window["title"].play();
+								 window["title"].play();
 							}catch(e){
 								console.log("error:: "+e);
 							}
@@ -4899,7 +4901,8 @@
                    
 					try{
 						//buzz.all().stop();
-						window["ques" + scene].play();
+						stopPrevAudio();
+						previousAudio = window["ques" + scene].play();
 					}catch(e){
 						console.log("error:: "+e);
 					}
@@ -4959,7 +4962,8 @@
                         }
 						
 						try{
-							window["next" + nn].play();
+							stopPrevAudio();
+							previousAudio = window["next" + nn].play();
 							//buzz.all().stop();
 						}catch(e){
 							console.log("error:: "+e);
@@ -5011,8 +5015,8 @@
 					
                     if (firsetTime == true) {
                         stopClick();
-                        playClick();
-                        scene++;
+						scene++;
+                        playClick();                        
                     }
                     if (scene == 6) {
                         sym.getSymbol("#Stage_scene1_sym_txt").stop(0);
@@ -5157,7 +5161,7 @@
                             if (RVal == 2) {
                                 setTimeout(function() {
 									try{
-										//buzz.all().stop();
+										//buzz.all().stop();										
 										window["anim4"].play();
 									}catch(e){
 										console.log("error:: "+e);										
@@ -5186,6 +5190,7 @@
 									if (RVal != 2 && RVal != 3) {
 										//buzz.all().stop();
 									}
+									stopPrevAudio();
 									playResult = window["res" + RVal].play();								
 								}catch(e){	
 									console.log("error:: "+e);
@@ -5245,6 +5250,12 @@
                     }
                 }
 				
+				function stopPrevAudio(){
+					if(previousAudio !== null){
+						previousAudio.stop();
+					}
+				}
+				
 				function afterCheckAnswer(){
 					
 					 if (RVal < 5){										
@@ -5263,7 +5274,8 @@
 								
 								try{
 									//buzz.all().stop();
-									window["anim" + (RVal - 4)].play();
+									stopPrevAudio();
+									previousAudio = window["anim" + (RVal - 4)].play();
 								}catch(e){	
 								    console.log("error:: "+e);
 								    afterCheckAnswerLast2Steps();									
@@ -5301,6 +5313,7 @@
 						sym.stopSound("BG");
 						try{
 							//buzz.all().stop();
+							stopPrevAudio();
 							window["anim3"].play();
 						}catch(e){
 							console.log("error:: "+e);
@@ -5322,7 +5335,7 @@
                         sym.getSymbol("sym_info").play(0);
 						
 						try{
-							////buzz.all().stop();
+							////buzz.all().stop();							
 							window["click"].play();	
 							window["info"].play();	
 						}catch(e){
