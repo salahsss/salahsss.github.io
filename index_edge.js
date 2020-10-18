@@ -4737,7 +4737,7 @@
 					}	
 				}
 						
-				alert(1);						
+				alert(2);						
 				IS_IOS = false;
 				IS_MOB = false;
                 function init() {
@@ -4864,6 +4864,7 @@
 						window[name].bind("canplaythrough", function () {
 								counterIsAudioReady++;							
 								window[name].unbind("canplaythrough");	
+								console.log(name+ " aud ready to play");
 						});		
 				}
 				
