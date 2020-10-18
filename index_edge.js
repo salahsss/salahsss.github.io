@@ -4741,7 +4741,7 @@
 				IS_MOB = false;
                 function init() {
 					IS_IOS = iOS();
-					IS_MOB = isMobile();
+					IS_MOB = !isMobile();
 					
 					if (!buzz.isSupported()) {
 						alert("Your browser is too old, audio is not supported!");
@@ -5136,8 +5136,12 @@
 					
 					if(IS_MOB && (RVal+1) < preloadAudio.length){
 							
-						for (var i = 0; i < preloadAudio[RVal+1].length; i++) {							
-							window[preloadAudio[RVal+1][i]].load();																								
+							
+						for (var i = 0; i < preloadAudio[RVal+1].length; i++) {	
+							try{						
+								window[preloadAudio[RVal+1][i]].load();	
+							}catch(e){
+							}								
 						}																						
 					}
 					
