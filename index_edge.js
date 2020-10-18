@@ -4536,9 +4536,6 @@
                     "cursor": "default"
                 })
 				
-				//document.ontouchmove = function(e) {e.preventDefault()};
-				
-				
                 yepnope({
                     nope: ['js/jqueryui1103custommin.js', 'js/jqueryuitouchpunchmin.js', 'js/buzz.js'],
                     complete: init
@@ -4737,12 +4734,12 @@
 					}	
 				}
 						
-				alert(2);						
+				alert(3);						
 				IS_IOS = false;
 				IS_MOB = false;
                 function init() {
 					IS_IOS = iOS();
-					IS_MOB = isMobile();
+					IS_MOB = !isMobile();
 					
 					if (!buzz.isSupported()) {
 						alert("Your browser is too old, audio is not supported!");
@@ -4758,7 +4755,6 @@
                     sym.$("#Stage_scene1_Rect").css({
                         "display": "none"
                     }); 
-
 					realInit();						
                 
                 }
@@ -4902,7 +4898,7 @@
                     seconds = 0;
                    
 					try{
-						buzz.all().stop();
+						//buzz.all().stop();
 						window["ques" + scene].play();
 					}catch(e){
 						console.log("error:: "+e);
@@ -4921,7 +4917,7 @@
 
                 function stopClick() {
 					try{
-						buzz.all().stop();
+						//buzz.all().stop();
 					}catch(e){
 						console.log("error:: "+e);
 					}
@@ -4964,7 +4960,7 @@
 						
 						try{
 							window["next" + nn].play();
-							buzz.all().stop();
+							//buzz.all().stop();
 						}catch(e){
 							console.log("error:: "+e);
 						}
@@ -5141,7 +5137,7 @@
                             disableClick();
                             RVal++;
 							try{
-								buzz.all().stop();
+								//buzz.all().stop();
 								window["CorrectAnswer"].play();
 							}catch(e){	
 								console.log("error:: "+e);							
@@ -5162,7 +5158,7 @@
                             if (RVal == 2) {
                                 setTimeout(function() {
 									try{
-										buzz.all().stop();
+										//buzz.all().stop();
 										window["anim4"].play();
 									}catch(e){
 										console.log("error:: "+e);										
@@ -5172,7 +5168,7 @@
                             if (RVal == 3) {
                                 setTimeout(function() {
 									try{
-										buzz.all().stop();
+										//buzz.all().stop();
 										window["anim5"].play();
 									}catch(e){
 										console.log("error:: "+e);
@@ -5189,7 +5185,7 @@
 								var playResult = "salah";									
 								try{
 									if (RVal != 2 && RVal != 3) {
-										buzz.all().stop();
+										//buzz.all().stop();
 									}
 									playResult = window["res" + RVal].play();								
 								}catch(e){	
@@ -5197,11 +5193,10 @@
 									afterCheckAnswer();								
 								}
 								
-								alert("ggggg: "+playResult);
+								//alert("ggggg: "+playResult);
 								 setTimeout(function() {
-									afterCheckAnswer();
-									alert("audio ended");
-								 }, window["res" + RVal].du);	
+									afterCheckAnswer();									
+								 }, window["res" + RVal].getDuration()*1000);	
 								 
                             }, 1000)
                             try {
@@ -5268,7 +5263,7 @@
 							timeout0 = setTimeout(function() {
 								
 								try{
-									buzz.all().stop();
+									//buzz.all().stop();
 									window["anim" + (RVal - 4)].play();
 								}catch(e){	
 								    console.log("error:: "+e);
@@ -5305,7 +5300,7 @@
 						sym.getSymbol("#Stage_scene1_sym_pics_sym_pic7").play(0);
 						sym.stopSound("BG");
 						try{
-							buzz.all().stop();
+							//buzz.all().stop();
 							window["anim3"].play();
 						}catch(e){
 							console.log("error:: "+e);
@@ -5327,7 +5322,7 @@
                         sym.getSymbol("sym_info").play(0);
 						
 						try{
-							//buzz.all().stop();
+							////buzz.all().stop();
 							window["click"].play();	
 							window["info"].play();	
 						}catch(e){
@@ -5365,7 +5360,7 @@
                     if (num == 0) {
 						
 						try{
-							buzz.all().stop();
+							//buzz.all().stop();
 							window["result1"].play();
 						}catch(e){
 							console.log("error:: "+e);
@@ -5390,7 +5385,7 @@
                     } else if (num == 1 || num == 2 || num == 3) {
 						
 						try{
-							buzz.all().stop();
+							//buzz.all().stop();
 							window["result2"].play();
 						}catch(e){
 							console.log("error:: "+e);
@@ -5409,7 +5404,7 @@
                         } catch (err) {}
                     } else {
 						try{
-							buzz.all().stop();
+							//buzz.all().stop();
 							window["result3"].play();
 						}catch(e){
 							console.log("error:: "+e);
@@ -5457,7 +5452,7 @@
                             sym.playSound("BG", 0.07);
                         }
 						try{
-							buzz.all().stop();
+							//buzz.all().stop();
 							window["click"].play();
 						}catch(e){
 							console.log("error:: "+e);
@@ -5493,7 +5488,7 @@
                     if (start1 == false) {
                         sym.stopSound("BG");
 						try{
-							buzz.all().stop();
+							//buzz.all().stop();
 							window["click"].play();
 						}catch(e){
 							console.log("error:: "+e);
@@ -5548,33 +5543,17 @@
                         sym.playSound = function(request, val) {
                             if (jAudio.currentTime == 0) {
                                 jAudio.src = "media/" + request + ".mp3";
-                                jAudio.volume = val;
-								
-								try{
-									promise = jAudio.play();
-									
-									alert("pppp: "+promise);
-								}catch(e){
-									console.log("play error:: "+e);
-								}
-								
+                                jAudio.volume = val;															
+								promise = jAudio.play();									
                                 jAudio.loop = true;
-                            } else {
-                                try{
-									jAudio.play();
-								}catch(e){
-									console.log("play error:: "+e);
-								}
+                            } else {                              
+								jAudio.play();								
                             }
                         }
                         sym.stopSound = function() {
-                            if (!jAudio.paused) {
-								try{
-									jAudio.pause();
-								}catch(e){
-									console.log("pause error:: "+e);
-								}
-                                
+                            if (!jAudio.paused) {								
+								jAudio.pause();
+ 
                             }
                         }
                     }
