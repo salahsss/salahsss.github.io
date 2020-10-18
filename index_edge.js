@@ -4735,7 +4735,7 @@
 					}	
 				}
 						
-				alert(7);						
+				alert(8);						
 				IS_IOS = false;
 				IS_MOB = false;
 				previousAudio = null;
@@ -5121,6 +5121,8 @@
 						}						
 					}
 					
+					stopPrevAudio();
+					
                     if (check == false) {
                         check = true;
                         if (click_id == 1) {
@@ -5171,7 +5173,7 @@
 									if (RVal != 2 && RVal != 3) {
 										//buzz.all().stop();
 									}
-									stopPrevAudio();
+									
 									playResult = window["res" + RVal].play();								
 								
 								
