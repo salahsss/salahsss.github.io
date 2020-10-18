@@ -4736,7 +4736,8 @@
 						});						
 					}	
 				}
-								
+						
+				alert(1);						
 				IS_IOS = false;
 				IS_MOB = false;
                 function init() {
@@ -4823,7 +4824,7 @@
 										
 										var preLoadTimer = 0
 										var loadAudioInterval = setInterval(function() {											
-												if(preLoadTimer > 5000 || counterIsAudioReady >= preloadAudio[0].length){
+												if(preLoadTimer > 6000 || counterIsAudioReady >= preloadAudio[0].length){
 													clearInterval(loadAudioInterval);
 													justStart();													
 												}													
@@ -4927,7 +4928,7 @@
                         buzz.all().stop();
                         window["ques" + scene].play();
 					}catch(e){
-						//alert("error " + e);
+						console.log(e);
 					}
 							 playClickAnimAfter(1);
 							 playClickAnimAfter(2);
@@ -4942,7 +4943,12 @@
 				}
 
                 function stopClick() {
-                    buzz.all().stop();
+					try{
+						buzz.all().stop();
+					}catch(e){
+						console.log(e);
+					}
+					
                     for (var i = 1; i <= 3; i++) {
                         sym.getSymbol("#Stage_scene1_symClick" + i + "_circle").stop(0)
                     }
@@ -4971,14 +4977,21 @@
                         "cursor": "default"
                     });
                     setTimeout(function() {
-                        buzz.all().stop();
+						
                         var nn = 0;
                         if (scene < 5) {
                             nn = 1;
                         } else {
                             nn = 2;
                         }
-                        window["next" + nn].play();
+						
+						try{
+							window["next" + nn].play();
+							buzz.all().stop();
+						}catch(e){
+							console.log(e);
+						}
+						                        
                         timeout1 = 0;
                         seconds = 0
 						
@@ -5150,8 +5163,12 @@
                         if (click_id == 1) {
                             disableClick();
                             RVal++;
-                            buzz.all().stop();
-                            window["CorrectAnswer"].play();
+							try{
+								buzz.all().stop();
+								window["CorrectAnswer"].play();
+							}catch(e){	
+								console.log(e);							
+							}
                             sym.$("#Stage_scene1_RightMark").css({
                                 "opacity": "1"
                             });
@@ -5167,14 +5184,22 @@
                             }
                             if (RVal == 2) {
                                 setTimeout(function() {
-                                    buzz.all().stop();
-                                    window["anim4"].play();
+									try{
+										buzz.all().stop();
+										window["anim4"].play();
+									}catch(e){
+										console.log(e);										
+									}
                                 }, 500)
                             }
                             if (RVal == 3) {
                                 setTimeout(function() {
-                                    buzz.all().stop();
-                                    window["anim5"].play();
+									try{
+										buzz.all().stop();
+										window["anim5"].play();
+									}catch(e){
+										console.log(e);
+									}
                                 }, 500)
                             }
 							
@@ -5183,13 +5208,14 @@
                                 sym.$("#Stage_scene1_RightMark").css({
                                     "opacity": "0"
                                 });
-                                if (RVal != 2 && RVal != 3) {
-                                    buzz.all().stop();
-                                }
-														
+                                										
 								try{
+									if (RVal != 2 && RVal != 3) {
+										buzz.all().stop();
+									}
 									window["res" + RVal].play();								
 								}catch(e){	
+									console.log(e);
 									afterCheckAnswer();								
 								}
 								
@@ -5257,11 +5283,13 @@
 							sym.stopSound("BG");
 							timeout0 = setTimeout(function() {
 								
-								buzz.all().stop();
+								
+								
 								try{
+									buzz.all().stop();
 									window["anim" + (RVal - 4)].play();
 								}catch(e){	
-								    console.log("Error: Can't run audio " + "anim" + (RVal - 4));
+								    console.log(e);
 								    afterCheckAnswerLast2Steps();									
 								}
 								
@@ -5294,8 +5322,13 @@
 						sym.getSymbol("#Stage_scene1_sym_pics").stop("lbl7");
 						sym.getSymbol("#Stage_scene1_sym_pics_sym_pic7").play(0);
 						sym.stopSound("BG");
-						buzz.all().stop();
-						window["anim3"].play();
+						try{
+							buzz.all().stop();
+							window["anim3"].play();
+						}catch(e){
+							console.log(e);
+						}
+						
 						setTimeout(function() {
 							endGame = true;
 							resultStar();
@@ -5315,7 +5348,7 @@
 							//buzz.all().stop();
 							window["click"].play();							
 						}catch(e){
-							//alert("issue");
+							console.log(e);
 						}
 												
                         seconds = 0;
@@ -5347,9 +5380,16 @@
                 function resultStar() {
                     try {
                         parent.t1(game_number, 6, RVal, num, 1);
-                    } catch (err) {};
+                    } catch (err) {}
+					
                     if (num == 0) {
-                        buzz.all().stop();
+						
+						try{
+							buzz.all().stop();
+						}catch(e){
+							console.log(e);
+						}
+						
                         window["result1"].play();
                         sym.getSymbol("sym_win").$("result1").css({
                             "opacity": "1"
@@ -5367,8 +5407,13 @@
                             parent.parent.setGameScore(3);
                         } catch (err) {}
                     } else if (num == 1 || num == 2 || num == 3) {
-                        buzz.all().stop();
-                        window["result2"].play();
+						
+						try{
+							buzz.all().stop();
+							window["result2"].play();
+						}catch(e){
+							console.log(e);
+						}
                         sym.getSymbol("sym_win").$("result2").css({
                             "opacity": "1"
                         });
@@ -5382,8 +5427,12 @@
                             parent.parent.setGameScore(2);
                         } catch (err) {}
                     } else {
-                        buzz.all().stop();
-                        window["result3"].play();
+						try{
+							buzz.all().stop();
+							window["result3"].play();
+						}catch(e){
+							console.log(e);
+						}
                         sym.getSymbol("sym_win").$("result3").css({
                             "opacity": "1"
                         });
@@ -5462,8 +5511,12 @@
 				
                     if (start1 == false) {
                         sym.stopSound("BG");
-                        buzz.all().stop();
-                        window["click"].play();
+						try{
+							buzz.all().stop();
+							window["click"].play();
+						}catch(e){
+							
+						}
                         seconds = 0;
 						
                         timeout0 = setTimeout(function() {
