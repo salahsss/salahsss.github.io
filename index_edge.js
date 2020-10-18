@@ -4734,12 +4734,12 @@
 					}	
 				}
 						
-				alert(3);						
+				alert(4);						
 				IS_IOS = false;
 				IS_MOB = false;
                 function init() {
 					IS_IOS = iOS();
-					IS_MOB = !isMobile();
+					IS_MOB = isMobile();
 					
 					if (!buzz.isSupported()) {
 						alert("Your browser is too old, audio is not supported!");
@@ -5120,8 +5120,7 @@
 					}catch(e){						
 					}
 					
-					if(IS_MOB && (RVal+1) < preloadAudio.length){
-							
+					if(IS_MOB && (RVal+1) < preloadAudio.length){							
 						try{
 							for (var i = 0; i < preloadAudio[RVal+1].length; i++) {													
 									window[preloadAudio[RVal+1][i]].load();															
@@ -5275,9 +5274,10 @@
 								pos = seconds * 1000;
 								sym.getSymbol("#Stage_scene1_sym_txt_txt" + (RVal - 4)).stop(pos);
 								
-								window["anim" + (RVal - 4)].bind("ended", function () {
-									afterCheckAnswerLast2Steps();
-								});
+								setTimeout(function() {
+									afterCheckAnswerLast2Steps();									
+								}, window["anim" + (RVal - 4)].getDuration()*1000);
+								 	
 							}, 1000);
 					 }					
 				}
