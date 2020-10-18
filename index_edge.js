@@ -4742,7 +4742,7 @@
 				IS_MOB = false;
                 function init() {
 					IS_IOS = iOS();
-					IS_MOB = !isMobile();
+					IS_MOB = isMobile();
 					
 					if (!buzz.isSupported()) {
 						alert("Your browser is too old, audio is not supported!");
@@ -4824,7 +4824,7 @@
 										
 										var preLoadTimer = 0
 										var loadAudioInterval = setInterval(function() {											
-												if(preLoadTimer > 6000 || counterIsAudioReady >= preloadAudio[0].length){
+												if(preLoadTimer > 4000 || counterIsAudioReady >= preloadAudio[0].length){
 													clearInterval(loadAudioInterval);
 													justStart();													
 												}													
@@ -4862,40 +4862,13 @@
 				}
 				function ifAudioReadyCount(name){
 						window[name].bind("canplaythrough", function () {
-								counterIsAudioReady++;							
-								window[name].unbind("canplaythrough");	
+								counterIsAudioReady++;	
 								console.log(name+ " aud ready to play");
+								alert(name+ " aud ready to play");
+								window[name].unbind("canplaythrough");	
+								
 						});		
-				}
-				
-				function playThenStop(name){
-														
-							if(isEventSupported("playing")){
-								
-								window[name].play();			
-								window[name].bind("playing", function () {
-										window[name].unbind("playing");
-										stopThenUnmute(name);
-								});																	
-							}else{
-								stopThenUnmute(name);
-							}
-					
-				}
-				
-				function stopThenUnmute(name){
-							if(isEventSupported("pause")){	
-								
-								window[name].stop();			
-								window[name].bind("pause", function () {
-										window[name].unmute();
-										window[name].unbind("pause");										
-								});																	
-							}else{
-								window[name].unmute();
-							}								
-				}
-				
+				}					
 				
 				function enterGame(){
 					
@@ -4905,8 +4878,12 @@
 				
 						}
                         if (audioOn1 == false) {
-                            audioOn1 = true;
-                            window["title"].play();
+                            audioOn1 = true;							
+							try{
+								window["title"].play();
+							}catch(e){
+								console.log("error:: "+e);
+							}
                             sym.$("#Stage_start").css({
                                 "display": "none"
                             });
@@ -4924,17 +4901,17 @@
 
                 function playClick() {
                     seconds = 0;
-                    timeout0 = setTimeout(function() {
+                   
 					try{
-                        buzz.all().stop();
-                        window["ques" + scene].play();
+						buzz.all().stop();
+						window["ques" + scene].play();
 					}catch(e){
-						console.log(e);
+						console.log("error:: "+e);
 					}
-							 playClickAnimAfter(1);
-							 playClickAnimAfter(2);
-							 playClickAnimAfter(3);
-                    }, 500)
+					 playClickAnimAfter(1);
+					 playClickAnimAfter(2);
+					 playClickAnimAfter(3);
+                   
                 }
 				
 				function playClickAnimAfter(circleNum){
@@ -4947,7 +4924,7 @@
 					try{
 						buzz.all().stop();
 					}catch(e){
-						console.log(e);
+						console.log("error:: "+e);
 					}
 					
                     for (var i = 1; i <= 3; i++) {
@@ -4990,7 +4967,7 @@
 							window["next" + nn].play();
 							buzz.all().stop();
 						}catch(e){
-							console.log(e);
+							console.log("error:: "+e);
 						}
 						                        
                         timeout1 = 0;
@@ -5150,13 +5127,13 @@
 					
 					if(IS_MOB && (RVal+1) < preloadAudio.length){
 							
-							
-						for (var i = 0; i < preloadAudio[RVal+1].length; i++) {	
-							try{						
-								window[preloadAudio[RVal+1][i]].load();	
-							}catch(e){
-							}								
-						}																						
+						try{
+							for (var i = 0; i < preloadAudio[RVal+1].length; i++) {													
+									window[preloadAudio[RVal+1][i]].load();															
+							}
+						}catch(e){
+							console.log("error:: "+e);
+						}						
 					}
 					
                     if (check == false) {
@@ -5168,7 +5145,7 @@
 								buzz.all().stop();
 								window["CorrectAnswer"].play();
 							}catch(e){	
-								console.log(e);							
+								console.log("error:: "+e);							
 							}
                             sym.$("#Stage_scene1_RightMark").css({
                                 "opacity": "1"
@@ -5189,7 +5166,7 @@
 										buzz.all().stop();
 										window["anim4"].play();
 									}catch(e){
-										console.log(e);										
+										console.log("error:: "+e);										
 									}
                                 }, 500)
                             }
@@ -5199,7 +5176,7 @@
 										buzz.all().stop();
 										window["anim5"].play();
 									}catch(e){
-										console.log(e);
+										console.log("error:: "+e);
 									}
                                 }, 500)
                             }
@@ -5209,28 +5186,35 @@
                                 sym.$("#Stage_scene1_RightMark").css({
                                     "opacity": "0"
                                 });
-                                										
+                                	
+								var playResult = "salah";									
 								try{
 									if (RVal != 2 && RVal != 3) {
 										buzz.all().stop();
 									}
-									window["res" + RVal].play();								
+									playResult = window["res" + RVal].play();								
 								}catch(e){	
-									console.log(e);
+									console.log("error:: "+e);
 									afterCheckAnswer();								
 								}
 								
-								window["res" + RVal].bind("ended", function () {
-								     afterCheckAnswer();					
-								});
-
+								alert("ggggg: "+playResult);
+								 setTimeout(function() {
+									afterCheckAnswer();
+									alert("audio ended");
+								 }, window["res" + RVal].du);	
+								 
                             }, 1000)
                             try {
                                 parent.parent.addKidPoints(1);
                             } catch (err) {}
                         } else {
-                            stopClick()
-                            window["WrongAnswer"].play();
+                            stopClick();
+							try{
+								window["WrongAnswer"].play();
+							}catch(e){
+								console.log("play error:: "+e);
+							}
                             num++;
                             tries++;
                             sym.$("#Stage_scene1_WrongMark").css({
@@ -5284,13 +5268,11 @@
 							sym.stopSound("BG");
 							timeout0 = setTimeout(function() {
 								
-								
-								
 								try{
 									buzz.all().stop();
 									window["anim" + (RVal - 4)].play();
 								}catch(e){	
-								    console.log(e);
+								    console.log("error:: "+e);
 								    afterCheckAnswerLast2Steps();									
 								}
 								
@@ -5327,7 +5309,7 @@
 							buzz.all().stop();
 							window["anim3"].play();
 						}catch(e){
-							console.log(e);
+							console.log("error:: "+e);
 						}
 						
 						setTimeout(function() {
@@ -5347,15 +5329,13 @@
 						
 						try{
 							//buzz.all().stop();
-							window["click"].play();							
+							window["click"].play();	
+							window["info"].play();	
 						}catch(e){
-							console.log(e);
+							console.log("error:: "+e);
 						}
 												
-                        seconds = 0;
-						
-                        window["info"].play();	
-						
+                        seconds = 0;					
 						timeoutControl[0] = setTimeout(function(){
 							playAnim("#Stage_sym_info_sound");
 						}, controlAnimIntro[0]);
@@ -5387,11 +5367,12 @@
 						
 						try{
 							buzz.all().stop();
+							window["result1"].play();
 						}catch(e){
-							console.log(e);
+							console.log("error:: "+e);
 						}
 						
-                        window["result1"].play();
+                        
                         sym.getSymbol("sym_win").$("result1").css({
                             "opacity": "1"
                         });
@@ -5413,7 +5394,7 @@
 							buzz.all().stop();
 							window["result2"].play();
 						}catch(e){
-							console.log(e);
+							console.log("error:: "+e);
 						}
                         sym.getSymbol("sym_win").$("result2").css({
                             "opacity": "1"
@@ -5432,7 +5413,7 @@
 							buzz.all().stop();
 							window["result3"].play();
 						}catch(e){
-							console.log(e);
+							console.log("error:: "+e);
 						}
                         sym.getSymbol("sym_win").$("result3").css({
                             "opacity": "1"
@@ -5480,7 +5461,7 @@
 							buzz.all().stop();
 							window["click"].play();
 						}catch(e){
-							
+							console.log("error:: "+e);
 						}
 					
                         start1 = true;
@@ -5516,12 +5497,17 @@
 							buzz.all().stop();
 							window["click"].play();
 						}catch(e){
-							
+							console.log("error:: "+e);
 						}
                         seconds = 0;
 						
                         timeout0 = setTimeout(function() {
-                            window["info"].play();
+							try{
+								window["info"].play();
+							}catch(e){
+								console.log("play error:: "+e);
+							}
+							
                             timeoutControl[0] = setTimeout(function() {
 							   sym.getSymbol("#Stage_sym_info_sound").play(0);
 							}, controlAnimHelp[0]);
@@ -5564,15 +5550,32 @@
                             if (jAudio.currentTime == 0) {
                                 jAudio.src = "media/" + request + ".mp3";
                                 jAudio.volume = val;
-                                jAudio.play();
+								
+								try{
+									promise = jAudio.play();
+									
+									alert("pppp: "+promise);
+								}catch(e){
+									console.log("play error:: "+e);
+								}
+								
                                 jAudio.loop = true;
                             } else {
-                                jAudio.play();
+                                try{
+									jAudio.play();
+								}catch(e){
+									console.log("play error:: "+e);
+								}
                             }
                         }
                         sym.stopSound = function() {
                             if (!jAudio.paused) {
-                                jAudio.pause()
+								try{
+									jAudio.pause();
+								}catch(e){
+									console.log("pause error:: "+e);
+								}
+                                
                             }
                         }
                     }
