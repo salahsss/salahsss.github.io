@@ -5466,6 +5466,7 @@
                         }
 						try{
 							//buzz.all().stop();
+							window["info"].stop();
 							window["click"].play();
 						}catch(e){
 							console.log("error:: "+e);
