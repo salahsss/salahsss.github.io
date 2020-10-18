@@ -4706,15 +4706,29 @@
 					  ].includes(navigator.platform)
 					  // iPad on iOS 13 detection
 					  || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
-					}
+				}
 					
+				function isMobile() {
+					const toMatch = [
+						/Android/i,
+						/webOS/i,
+						/iPhone/i,
+						/iPad/i,
+						/iPod/i,
+						/BlackBerry/i,
+						/Windows Phone/i
+					];
+
+					return toMatch.some((toMatchItem) => {
+						return navigator.userAgent.match(toMatchItem);
+					});
+				}
 					
 				
 				function initBuzzAudio(){
 					for (var i = 0; i < ar_Sounds1.length; i++) {
 						window["" + ar_Sounds1[i]] = new buzz.sound("media/" + ar_Sounds1[i] + "", {
 								formats: ["mp3", "ogg", "wav"],
-								volume :0,
 								preload: true,
 								autoplay: false,
 								loop: false
@@ -4723,13 +4737,12 @@
 					}	
 				}
 				
-				
-
-				//alert(8);
+				alert(9);
 				IS_IOS = false;
+				IS_MOB = false;
                 function init() {
 					IS_IOS = iOS();
-					//$("#Stage").disableSelection();
+					IS_MOB = isMobile();
 					
 					if (!buzz.isSupported()) {
 						alert("Your browser is too old, audio is not supported!");
@@ -4739,36 +4752,14 @@
 					}
 							
 					initBuzzAudio();	
-					
-					loadedCounter = 0;
-					animLoaded = false;
-					
-					buzz.all().mute();
-					
-					try{
-						if(IS_IOS){	
-							setTimeout(realInit, 500);								
-						}else{		
-							if(isEventSupported("loadeddata")){
-								window["info"].bind("loadeddata", function () {									
-									setTimeout(realInit, 500);
-									window["info"].unbind("loadeddata");									
-								});
-							}else{
-								setTimeout(realInit, 500);								
-							}
-						}
-											
-					}catch(e){
-						alert("Somethiong Went Wrong! The media may not work properly");
-						realInit();	
-					}
-
+																					
                     ar_Sounds = ["BG", "title"];
                     Audios(ar_Sounds);
                     sym.$("#Stage_scene1_Rect").css({
                         "display": "none"
-                    });   
+                    }); 
+
+					realInit();						
                 
                 }
 				
@@ -4824,20 +4815,23 @@
 					counterIsAudioReady = 0;					
                     $("#Stage_start_start3").bind('click touchend', function() {
 																	
-						if(IS_IOS){
+						if(IS_MOB){
 							if(isEventSupported("playing")){
 								try{
 									if(isEventSupported("canplaythrough")){	
-										for (var i = 0; i < preloadAudio[0].length; i++) {									
-											playThenStop("" + preloadAudio[0][i]);
-											ifAudioReadyCount("" + preloadAudio[0][i]);
+										for (var i = 0; i < preloadAudio[0].length; i++) {
+											window[preloadAudio[0][i]].load();																						
+											ifAudioReadyCount(preloadAudio[0][i]);
 										}
-
+										
+										var preLoadTimer = 0
 										var loadAudioInterval = setInterval(function() {											
-												if(counterIsAudioReady >= preloadAudio[0].length-1){
+												if(preLoadTimer > 5000 || counterIsAudioReady >= preloadAudio[0].length-1){
 													clearInterval(loadAudioInterval);
 													justStart();													
-												}											
+												}													
+													
+												preLoadTimer += 500;												
 										}, 500);
 										
 									}else{
@@ -4852,9 +4846,7 @@
 								justStart();
 							}																					
 						}	
-						else{
-							buzz.all().unmute();
-							buzz.all().setVolume(80);							
+						else{						
 							enterGame();																					
 						}
                     });
@@ -4865,23 +4857,18 @@
 					if(startGameTimeout != 0){
 						clearTimeout(startGameTimeout);
 					}
-					buzz.all().unmute();
-					buzz.all().setVolume(80);
-					
 					startGameTimeout = setTimeout(function() {
 						
 						enterGame();
 					}, 600);
 				}
 				function ifAudioReadyCount(name){
-					if(isEventSupported("canplaythrough")){
 						window[name].bind("canplaythrough", function () {
 								counterIsAudioReady++;							
-								window[name].unbind("canplaythrough");							
-						});
-					}else{
-						counterIsAudioReady++;
-					}
+								window[name].unbind("canplaythrough");	
+
+								alert("canplaythrough " + name);
+						});		
 				}
 				
 				function playThenStop(name){
@@ -5152,21 +5139,13 @@
 					}catch(e){						
 					}
 					
-					
-					if(IS_IOS && (RVal+1) < preloadAudio.length){
-						
-						for (var i = 0; i < preloadAudio[RVal+1].length; i++) {
-							window[preloadAudio[RVal+1][i]].mute();
-							try{
-								playThenStop("" + preloadAudio[RVal+1][i]);
-								ifAudioReadyCount("" + preloadAudio[RVal+1][i]);
-							}catch(e){
-								window[preloadAudio[RVal+1][i]].unmute();
-							}
+					if(IS_MOB && (RVal+1) < preloadAudio.length){
+							
+						for (var i = 0; i < preloadAudio[RVal+1].length; i++) {							
+								window[preloadAudio[RVal+1][i]].load();																						
+								ifAudioReadyCount(preloadAudio[RVal+1][i]);										
 						}																						
 					}
-					
-					
 					
                     if (check == false) {
                         check = true;
