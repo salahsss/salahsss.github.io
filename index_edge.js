@@ -4601,6 +4601,7 @@
 					[0, 5700, 9500, 11200]
                 ];
 				
+
 				preloadAudio = [
 					["title", "anim3", "anim4", "anim5", "ques1", "ques2","next1", "next2", "WrongAnswer", "click", "info", "CorrectAnswer", "res1"],
 					["ques3","res2","res3"],
@@ -4734,7 +4735,7 @@
 					}	
 				}
 						
-				alert(5);						
+				alert(7);						
 				IS_IOS = false;
 				IS_MOB = false;
 				previousAudio = null;
@@ -4817,18 +4818,12 @@
 									if(isEventSupported("canplaythrough")){	
 										for (var i = 0; i < preloadAudio[0].length; i++) {
 											window[preloadAudio[0][i]].load();																						
-											ifAudioReadyCount(preloadAudio[0][i]);
+											//ifAudioReadyCount(preloadAudio[0][i]);
 										}
 										
-										var preLoadTimer = 0
-										var loadAudioInterval = setInterval(function() {											
-												if(preLoadTimer > 9000 || counterIsAudioReady >= preloadAudio[0].length){
-													clearInterval(loadAudioInterval);
-													justStart();													
-												}													
-													
-												preLoadTimer += 500;												
-										}, 500);
+										var loadAudioInterval = setTimout(function() {											
+												justStart();													
+										}, 1000);
 										
 									}else{
 										justStart();
@@ -4876,11 +4871,9 @@
 						}
                         if (audioOn1 == false) {
                             audioOn1 = true;							
-							try{
-								 window["title"].play();
-							}catch(e){
-								console.log("error:: "+e);
-							}
+							
+							window["title"].play();
+							
                             sym.$("#Stage_start").css({
                                 "display": "none"
                             });
@@ -4899,13 +4892,11 @@
                 function playClick() {
                     seconds = 0;
                    
-					try{
-						//buzz.all().stop();
-						stopPrevAudio();
-						previousAudio = window["ques" + scene].play();
-					}catch(e){
-						console.log("error:: "+e);
-					}
+					
+					 //buzz.all().stop();
+					 stopPrevAudio();
+					 previousAudio = window["ques" + scene].play();
+					
 					 playClickAnimAfter(1);
 					 playClickAnimAfter(2);
 					 playClickAnimAfter(3);
@@ -4919,11 +4910,9 @@
 				}
 
                 function stopClick() {
-					try{
-						//buzz.all().stop();
-					}catch(e){
-						console.log("error:: "+e);
-					}
+					
+					//buzz.all().stop();
+					
 					
                     for (var i = 1; i <= 3; i++) {
                         sym.getSymbol("#Stage_scene1_symClick" + i + "_circle").stop(0)
@@ -4961,13 +4950,11 @@
                             nn = 2;
                         }
 						
-						try{
+						
 							stopPrevAudio();
 							previousAudio = window["next" + nn].play();
 							//buzz.all().stop();
-						}catch(e){
-							console.log("error:: "+e);
-						}
+						
 						                        
                         timeout1 = 0;
                         seconds = 0
@@ -5139,12 +5126,10 @@
                         if (click_id == 1) {
                             disableClick();
                             RVal++;
-							try{
+							
 								//buzz.all().stop();
 								window["CorrectAnswer"].play();
-							}catch(e){	
-								console.log("error:: "+e);							
-							}
+							
                             sym.$("#Stage_scene1_RightMark").css({
                                 "opacity": "1"
                             });
@@ -5160,22 +5145,18 @@
                             }
                             if (RVal == 2) {
                                 setTimeout(function() {
-									try{
+									
 										//buzz.all().stop();										
 										window["anim4"].play();
-									}catch(e){
-										console.log("error:: "+e);										
-									}
+									
                                 }, 500)
                             }
                             if (RVal == 3) {
                                 setTimeout(function() {
-									try{
+									
 										//buzz.all().stop();
 										window["anim5"].play();
-									}catch(e){
-										console.log("error:: "+e);
-									}
+									
                                 }, 500)
                             }
 							
@@ -5186,16 +5167,13 @@
                                 });
                                 	
 								var playResult = "salah";									
-								try{
+								
 									if (RVal != 2 && RVal != 3) {
 										//buzz.all().stop();
 									}
 									stopPrevAudio();
 									playResult = window["res" + RVal].play();								
-								}catch(e){	
-									console.log("error:: "+e);
-									afterCheckAnswer();								
-								}
+								
 								
 								//alert("ggggg: "+playResult);
 								 setTimeout(function() {
@@ -5208,11 +5186,9 @@
                             } catch (err) {}
                         } else {
                             stopClick();
-							try{
+							
 								window["WrongAnswer"].play();
-							}catch(e){
-								console.log("play error:: "+e);
-							}
+							
                             num++;
                             tries++;
                             sym.$("#Stage_scene1_WrongMark").css({
@@ -5272,14 +5248,11 @@
 							sym.stopSound("BG");
 							timeout0 = setTimeout(function() {
 								
-								try{
+								
 									//buzz.all().stop();
 									stopPrevAudio();
 									previousAudio = window["anim" + (RVal - 4)].play();
-								}catch(e){	
-								    console.log("error:: "+e);
-								    afterCheckAnswerLast2Steps();									
-								}
+								
 								
 								timeout1 = 0;												
 								seconds = window["anim" + (RVal - 4)].getTime();
@@ -5311,13 +5284,11 @@
 						sym.getSymbol("#Stage_scene1_sym_pics").stop("lbl7");
 						sym.getSymbol("#Stage_scene1_sym_pics_sym_pic7").play(0);
 						sym.stopSound("BG");
-						try{
+						
 							//buzz.all().stop();
 							stopPrevAudio();
 							window["anim3"].play();
-						}catch(e){
-							console.log("error:: "+e);
-						}
+						
 						
 						setTimeout(function() {
 							endGame = true;
@@ -5334,13 +5305,11 @@
                         sym.stop("lbl2");
                         sym.getSymbol("sym_info").play(0);
 						
-						try{
+						
 							////buzz.all().stop();							
 							window["click"].play();	
 							window["info"].play();	
-						}catch(e){
-							console.log("error:: "+e);
-						}
+						
 												
                         seconds = 0;					
 						timeoutControl[0] = setTimeout(function(){
@@ -5372,12 +5341,10 @@
 					
                     if (num == 0) {
 						
-						try{
+						
 							//buzz.all().stop();
 							window["result1"].play();
-						}catch(e){
-							console.log("error:: "+e);
-						}
+						
 						
                         
                         sym.getSymbol("sym_win").$("result1").css({
@@ -5397,12 +5364,10 @@
                         } catch (err) {}
                     } else if (num == 1 || num == 2 || num == 3) {
 						
-						try{
+						
 							//buzz.all().stop();
 							window["result2"].play();
-						}catch(e){
-							console.log("error:: "+e);
-						}
+						
                         sym.getSymbol("sym_win").$("result2").css({
                             "opacity": "1"
                         });
@@ -5416,12 +5381,10 @@
                             parent.parent.setGameScore(2);
                         } catch (err) {}
                     } else {
-						try{
+						
 							//buzz.all().stop();
 							window["result3"].play();
-						}catch(e){
-							console.log("error:: "+e);
-						}
+						
                         sym.getSymbol("sym_win").$("result3").css({
                             "opacity": "1"
                         });
@@ -5464,13 +5427,11 @@
                         if (soundOff == false) {
                             sym.playSound("BG", 0.07);
                         }
-						try{
-							//buzz.all().stop();
-							window["info"].stop();
-							window["click"].play();
-						}catch(e){
-							console.log("error:: "+e);
-						}
+						
+						//buzz.all().stop();
+						window["info"].stop();
+						window["click"].play();
+
 					
                         start1 = true;
                         if (endGame == false) {
@@ -5501,20 +5462,16 @@
 				
                     if (start1 == false) {
                         sym.stopSound("BG");
-						try{
+						
 							//buzz.all().stop();
 							window["click"].play();
-						}catch(e){
-							console.log("error:: "+e);
-						}
+					
                         seconds = 0;
 						
                         timeout0 = setTimeout(function() {
-							try{
-								window["info"].play();
-							}catch(e){
-								console.log("play error:: "+e);
-							}
+							
+							window["info"].play();
+							
 							
                             timeoutControl[0] = setTimeout(function() {
 							   sym.getSymbol("#Stage_sym_info_sound").play(0);
