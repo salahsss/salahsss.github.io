@@ -4736,8 +4736,7 @@
 						});						
 					}	
 				}
-				
-				alert(9);
+								
 				IS_IOS = false;
 				IS_MOB = false;
                 function init() {
@@ -4762,8 +4761,6 @@
 					realInit();						
                 
                 }
-				
-				
 				
 				function realInit(){
 
@@ -4826,7 +4823,7 @@
 										
 										var preLoadTimer = 0
 										var loadAudioInterval = setInterval(function() {											
-												if(preLoadTimer > 5000 || counterIsAudioReady >= preloadAudio[0].length-1){
+												if(preLoadTimer > 5000 || counterIsAudioReady >= preloadAudio[0].length){
 													clearInterval(loadAudioInterval);
 													justStart();													
 												}													
@@ -4866,8 +4863,6 @@
 						window[name].bind("canplaythrough", function () {
 								counterIsAudioReady++;							
 								window[name].unbind("canplaythrough");	
-
-								alert("canplaythrough " + name);
 						});		
 				}
 				
@@ -5142,8 +5137,7 @@
 					if(IS_MOB && (RVal+1) < preloadAudio.length){
 							
 						for (var i = 0; i < preloadAudio[RVal+1].length; i++) {							
-								window[preloadAudio[RVal+1][i]].load();																						
-								ifAudioReadyCount(preloadAudio[RVal+1][i]);										
+							window[preloadAudio[RVal+1][i]].load();																								
 						}																						
 					}
 					
