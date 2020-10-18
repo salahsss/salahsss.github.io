@@ -4734,7 +4734,7 @@
 					}	
 				}
 						
-				alert(4);						
+				alert(5);						
 				IS_IOS = false;
 				IS_MOB = false;
 				previousAudio = null;
