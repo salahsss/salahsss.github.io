@@ -4824,7 +4824,7 @@
 										
 										var preLoadTimer = 0
 										var loadAudioInterval = setInterval(function() {											
-												if(preLoadTimer > 4000 || counterIsAudioReady >= preloadAudio[0].length){
+												if(preLoadTimer > 9000 || counterIsAudioReady >= preloadAudio[0].length){
 													clearInterval(loadAudioInterval);
 													justStart();													
 												}													
@@ -4863,8 +4863,7 @@
 				function ifAudioReadyCount(name){
 						window[name].bind("canplaythrough", function () {
 								counterIsAudioReady++;	
-								console.log(name+ " aud ready to play");
-								alert(name+ " aud ready to play");
+								console.log(name+ " aud ready to play");								
 								window[name].unbind("canplaythrough");	
 								
 						});		
