@@ -4735,7 +4735,7 @@
 					}	
 				}
 						
-				alert(8);						
+				//alert(9);						
 				IS_IOS = false;
 				IS_MOB = false;
 				previousAudio = null;
@@ -4812,10 +4812,8 @@
 					counterIsAudioReady = 0;					
                     $("#Stage_start_start3").bind('click touchend', function() {
 																	
-						if(IS_MOB){
-							if(isEventSupported("playing")){
-								try{
-									if(isEventSupported("canplaythrough")){	
+						//if(IS_MOB){
+								try{								
 										for (var i = 0; i < preloadAudio[0].length; i++) {
 											window[preloadAudio[0][i]].load();																						
 											//ifAudioReadyCount(preloadAudio[0][i]);
@@ -4825,21 +4823,13 @@
 												justStart();													
 										}, 1000);
 										
-									}else{
-										justStart();
-									}
-									
 								}catch(e){
 									justStart();
-								}
-							}
-							else{								
-								justStart();
-							}																					
-						}	
-						else{						
-							enterGame();																					
-						}
+								}																					
+						//}	
+						//else{						
+						//	enterGame();																					
+						//}
                     });
 				}
 				startGameTimeout = 0;
@@ -5180,7 +5170,7 @@
 								//alert("ggggg: "+playResult);
 								 setTimeout(function() {
 									afterCheckAnswer();									
-								 }, window["res" + RVal].getDuration()*1000);	
+								 }, window["res" + RVal].getDuration()*1000 + 400);	
 								 
                             }, 1000)
                             try {
@@ -5263,7 +5253,7 @@
 								
 								setTimeout(function() {
 									afterCheckAnswerLast2Steps();									
-								}, window["anim" + (RVal - 4)].getDuration()*1000);
+								}, window["anim" + (RVal - 4)].getDuration()*1000+400);
 								 	
 							}, 1000);
 					 }					
